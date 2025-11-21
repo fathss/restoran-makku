@@ -3,9 +3,13 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('admin.dashboard');
 });
 
-Route::get('/dashboard-admin', function () {
-    return view('admin.dashboard');
-})->name('admin.dashboard');
+Route::get('/admin', function () {
+    return view('admin.adminlte');
+});
+
+Route::get('/customer', function () {
+    return view('customer.index');
+});

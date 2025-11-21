@@ -1,19 +1,18 @@
-@extends('adminlte::page')
+@extends('layouts.dashboard-app')
 
-@section('title', 'Dashboard Admin')
+{{-- Title --}}
+@section('title', 'Admin Dashboard')
 
-@section('content_header')
-    <h1 class="m-0 text-dark">Dashboard Admin</h1>
-@stop
-
+{{-- Main Content --}}
 @section('content')
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <p class="mb-0">Selamat datang di halaman dashboard AdminLTE Anda!</p>
-                </div>
+    {{-- Pengerjaan content dashboard disini --}}
+    {{-- Contoh --}}
+    <div class="card mt-4 p-4">
+        <div class="row">
+            <div class="col-12">
+                <h1>Welcome to the Admin Dashboard</h1>
+                <p>This is the main content area for the admin dashboard.</p>
             </div>
         </div>
     </div>
-@stop
+@endsection
