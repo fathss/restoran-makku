@@ -6,13 +6,30 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin;
 
-Route::get('/admin/dashboard', function () {
-    return view('admin.dashboard');
-})->name('admin.dashboard');
-Route::get('/admin', function () {
+
+Route::get('/adminlte', function () {
     return view('admin.adminlte');
 });
+
+Route::middleware(['auth', 'adminOnly'])->group(function () {
+    // Menu Management
+    Route::resource('/admin/menus', Admin\AdminMenuController::class)->names('admin.menus');
+
+    // Order Management
+    Route::resource('/admin/orders', Admin\AdminOrderController::class)->names('admin.orders');
+
+    // Reservation Management
+    Route::resource('/admin/reservations', Admin\AdminReservationController::class)->names('admin.reservations');
+
+    // Dashboard Admin
+    Route::resource('/admin', Admin\AdminController::class)->names('admin');
+});
+
+// Route::get('/admin/dashboard', function () {
+//     return view('admin.dashboard');
+// })->name('admin.dashboard');
 
 // tanpa login
 // Halaman Utama (Landing Page)
@@ -24,7 +41,7 @@ Route::get('/menu', [MenuController::class, 'index'])->name('menu.index');
 
 // ketika login
 Route::middleware('auth')->group(function () {
-    
+
 
     //Fitur Cart
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
@@ -37,12 +54,12 @@ Route::middleware('auth')->group(function () {
     //Fitur Profil
     //Lihat Profil
     Route::get('/my-profile', [ProfileController::class, 'show'])->name('profile.show');
-    
+
     //Edit Profil & Password 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    
+
     //Route Hapus Item
     Route::delete('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
 
@@ -59,4 +76,4 @@ Route::middleware('auth')->group(function () {
     Route::patch('/cart/update', [CartController::class, 'updateQuantity'])->name('cart.update');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

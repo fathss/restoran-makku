@@ -201,6 +201,12 @@ body.login-page {
     border-radius: 10px 10px 0 0;
 }
 
+.menu-img-preview {
+    height: 250px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
 /* Judul Menu */
 .card-title {
     color: #333; 

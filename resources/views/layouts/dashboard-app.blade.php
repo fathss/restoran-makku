@@ -10,13 +10,13 @@
 
         @include('partials.admin.sidebar')
 
-        <main class="app-main">
+        <div class="app-main">
             <div class="app-content">
-                <div class="container-fluid">
+                <div class="container-fluid mt-4">
                     @yield('content')
                 </div>
             </div>
-        </main>
+        </div>
 
         @include('partials.admin.footer')
     </div>
