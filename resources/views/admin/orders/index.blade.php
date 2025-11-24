@@ -20,9 +20,9 @@
         </div>
     </div>
 
-    {{-- <div class="row">
+    <div class="row">
         @foreach($orders as $order)
             @include('partials.admin.orders.order-card')
         @endforeach
-    </div> --}}
+    </div>
 @endsection

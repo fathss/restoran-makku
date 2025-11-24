@@ -1,9 +1,9 @@
-<aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="light">
+<aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
   <!--begin::Sidebar Brand-->
   <div class="sidebar-brand">
     <a href="./index.html" class="brand-link">
       {{-- <img src="./assets/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image opacity-75 shadow" /> --}}
-      <span class="brand-logo">Admin</span>
+      <span class="brand-text fw-bold fs-5">ADMIN</span>
     </a>
   </div>
   <!--end::Sidebar Brand-->
@@ -12,7 +12,7 @@
     <nav class="mt-2">
       <!--begin::Sidebar Menu-->
       <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="navigation" aria-label="Main navigation" data-accordion="false" id="navigation">
-        <li class="nav-item">
+        {{-- <li class="nav-item">
           <a href="#" class="nav-link">
             <i class="nav-icon bi bi-speedometer"></i>
             <p>Dashboard <i class="nav-arrow bi bi-chevron-right"></i></p>
@@ -30,7 +30,15 @@
             <li class="nav-item"><a href="./widgets/info-box.html" class="nav-link"><i class="nav-icon bi bi-circle"></i><p>info Box</p></a></li>
             <li class="nav-item"><a href="./widgets/cards.html" class="nav-link"><i class="nav-icon bi bi-circle"></i><p>Cards</p></a></li>
           </ul>
+        </li> --}}
+        {{-- Dashboard --}}
+        <li class="nav-item">
+          <a href="{{ route('admin.index') }}" class="nav-link active bg-primary p-3">
+            <i class="nav-icon bi bi-speedometer"></i>
+            <p>Dashboard</p>
+          </a>
         </li>
+        <li class="nav-header fw-light">MANAJEMEN PELANGGAN</li>
         {{-- Menu --}}
         <li class="nav-item">
           <a href="{{ route('admin.menus.index') }}" class="nav-link">
@@ -41,14 +49,16 @@
 
         {{-- Transaksi --}}
         <li class="nav-item">
-          <button type="button" class="nav-link" data-bs-toggle="dropdown" aria-expanded="false">
+          <a href="#" class="nav-link">
               <i class="nav-icon fas fa-receipt"></i>
               <p>
                 Transaksi 
-                <span class="nav-badge badge text-bg-danger me-3">5</span>
+                <span class="nav-badge badge text-bg-danger me-3">
+                  {{ $totalTransactions ?? 0 }}
+                </span>
                 <i class="nav-arrow bi bi-chevron-right"></i>
               </p>
-          </button>
+          </a>
           <ul class="nav nav-treeview">
             {{-- Pesanan --}}
             <li class="nav-item">
@@ -56,7 +66,9 @@
                 <i class="nav-icon fas fa-list-check"></i>
                 <p>
                   Pesanan
-                  <span class="nav-badge badge text-bg-danger">3</span>
+                  <span class="nav-badge badge text-bg-danger">
+                    {{ $totalOrders ?? 0 }}
+                  </span>
                 </p>
               </a>
             </li>
@@ -66,7 +78,9 @@
                 <i class="nav-icon fas fa-calendar-check"></i>
                 <p>
                   Reservasi
-                  <span class="nav-badge badge text-bg-danger">2</span>
+                  <span class="nav-badge badge text-bg-danger">
+                    {{ $totalReservations ?? 0 }}
+                  </span>
                 </p>
               </a>
             </li>

@@ -10,7 +10,7 @@ use App\Http\Controllers\Admin;
 
 
 Route::get('/adminlte', function () {
-    return view('admin.adminlte');
+    return view('admin.adminlte3');
 });
 
 Route::middleware(['auth', 'adminOnly'])->group(function () {
@@ -25,6 +25,9 @@ Route::middleware(['auth', 'adminOnly'])->group(function () {
 
     // Dashboard Admin
     Route::resource('/admin', Admin\AdminController::class)->names('admin');
+
+    // Main Page
+    Route::get('/', [Admin\AdminController::class, 'index'])->name('admin.page');
 });
 
 // Route::get('/admin/dashboard', function () {

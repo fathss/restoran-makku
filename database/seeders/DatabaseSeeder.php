@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // user
-        
+
         // Akun Admin
         User::create([
             'name' => 'Administrator',
@@ -120,7 +120,7 @@ class DatabaseSeeder extends Seeder
             'available' => true,
             'image_url' => 'img/lumpia.png'
         ]);
-        
+
         $menu9 = Menu::create([
             'menu_name' => 'Es Campur Spesial',
             'description' => 'Campuran buah-buahan, agar-agar, dan santan segar dengan sirup merah.',
@@ -156,7 +156,7 @@ class DatabaseSeeder extends Seeder
             'available' => true,
             'image_url' => 'img/tahu-isi.png'
         ]);
-        
+
         $menu13 = Menu::create([
             'menu_name' => 'Mie Goreng Seafood',
             'description' => 'Mie goreng dengan udang, cumi, dan sayuran segar.',
@@ -166,8 +166,16 @@ class DatabaseSeeder extends Seeder
             'image_url' => 'img/mie-goreng.png'
         ]);
 
+        $menu14 = Menu::create([
+            'menu_name' => 'Test Menu',
+            'description' => 'Test Menu Description',
+            'price' => 10000,
+            'category' => 'Makanan',
+            'available' => false,
+        ]);
+
         // order
-        
+
         // Membuat 1 Order Dummy untuk Customer di atas
         $order = Order::create([
             'user_id' => $customer->user_id,
@@ -176,7 +184,5 @@ class DatabaseSeeder extends Seeder
             'order_type' => 'dine_in',
             'order_time' => Carbon::now(),
         ]);
-
-
     }
 }

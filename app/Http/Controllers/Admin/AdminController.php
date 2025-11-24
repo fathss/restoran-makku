@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
+use App\Models\Reservation;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -12,7 +14,14 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('admin.dashboard');
+        $totalOrders = Order::where('status', 'pending')->count();
+        $totalReservations = Reservation::where('status', 'pending')->count();
+
+        return view('admin.dashboard', [
+            'totalOrders' => $totalOrders,
+            'totalReservations' => $totalReservations,
+            'totalTransactions' => $totalOrders + $totalReservations,
+        ]);
     }
 
     /**

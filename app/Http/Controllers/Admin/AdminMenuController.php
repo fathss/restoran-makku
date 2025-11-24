@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Menu;
+use App\Models\OrderDetail;
 use Illuminate\Http\Request;
 
 class AdminMenuController extends Controller
@@ -19,7 +20,9 @@ class AdminMenuController extends Controller
             $menus = Menu::where('menu_name', 'like', '%' . $request->search . '%')->get();
         }
 
-        return view('admin.menu.index', compact('menus'));
+        $order_details = OrderDetail::all();
+
+        return view('admin.menu.index', compact('menus', 'order_details'));
         // return 'Hello, Admin Menu Controller!';
     }
 

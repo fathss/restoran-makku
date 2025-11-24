@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class AdminOrderController extends Controller
@@ -12,7 +13,9 @@ class AdminOrderController extends Controller
      */
     public function index()
     {
-        return view('admin.orders.index');
+        $orders = Order::with('user')->get();
+
+        return view('admin.orders.index', compact('orders'));
     }
 
     /**

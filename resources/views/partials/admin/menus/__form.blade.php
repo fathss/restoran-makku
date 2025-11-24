@@ -8,7 +8,7 @@
     </div>
     @if ($menu && $menu->image_url)
         <div class="mt-3">
-            <img src="{{ asset($menu->image_url) }}" alt="Current Image" class="menu-img-preview">
+            <img src="{{ asset($menu->image_url) }}" alt="Current Image" style="max-width: 200px; height: auto;" class="img-thumbnail">
             <p class="small text-muted mt-2">Gambar saat ini</p>
         </div>
     @endif
