@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
         User::create([
             'name' => 'Administrator',
             'email' => 'admin@resto.com',
-            'password' => Hash::make('password'), // Password: password
+            'password' => Hash::make('password'),
             'role' => 'admin',
             'phone' => '081234567890',
             'address' => 'Kantor Pusat Resto'
@@ -55,7 +55,7 @@ class DatabaseSeeder extends Seeder
             'price' => 25000,
             'category' => 'Makanan',
             'available' => true,
-            'image_url' => 'img/nasi-goreng.png' // Pastikan file ini ada di public/img
+            'image_url' => 'img/nasi-goreng.png'
         ]);
 
         $menu2 = Menu::create([

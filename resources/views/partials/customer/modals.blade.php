@@ -16,7 +16,6 @@
     <div class="modal-dialog modal-dialog-centered modal-sm">
         <div class="modal-content text-center p-4" style="border-radius: 20px;">
              @php
-                // Logika Penentu Aksi
                 if (session()->has('modal_error')) {
                     $actionType = 'fail'; $message = session('modal_error'); 
                 } elseif (session('type')) {

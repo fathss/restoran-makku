@@ -7,10 +7,7 @@
         <div class="card card-primary card-outline">
             <div class="card-body box-profile">
                 <div class="text-center mb-3">
-                    <div class="d-inline-flex align-items-center justify-content-center bg-secondary rounded-circle" 
-                         style="width: 100px; height: 100px; font-size: 2.5rem; color: white;">
-                        {{ substr($user->name, 0, 1) }}
-                    </div>
+                    <i class="fas fa-user-circle fa-4x text-danger"></i>
                 </div>
 
                 <h3 class="profile-username text-center font-weight-bold">{{ $user->name }}</h3>

@@ -87,16 +87,32 @@
             @if(session('cart'))
             <div class="card-footer bg-white">
                 <div class="d-flex justify-content-between align-items-center">
+
+                    <div>
+                        <div class="pr-5 w-100 mb-3 mt-3">
+                            <h5 class="font-weight-bold mb-2">Total: <span class="text-danger pr-4">Rp {{ number_format($total, 0, ',', '.') }}</span></h5>
+                        </div>
+
+                        <a href="{{ route('menu.index') }}" class="btn btn-default rounded-pill font-weight-bold">
+                            <i class="fas fa-arrow-left mr-1"></i> Lanjut Belanja
+                        </a>
+                    </div>
                     
-                    <a href="{{ route('menu.index') }}" class="btn btn-default rounded-pill font-weight-bold">
-                        <i class="fas fa-arrow-left mr-1"></i> Lanjut Belanja
-                    </a>
                     
-                    <div class="text-right">
-                        <h5 class="font-weight-bold mb-2">Total: <span class="text-danger">Rp {{ number_format($total, 0, ',', '.') }}</span></h5>
-                        
+                    
+                    <div class="text-right d-flex flex-column">
+
                         <form action="{{ route('checkout.store') }}" method="POST">
                             @csrf
+
+                            <div class="mb-3">
+                                <select name="order_type" class="form-control w-90 btn btn-danger font-weight-bold rounded-pill px-4" required>
+                                    <option value="" disabled selected>-Pilih Metode Pesanan-</option>
+                                    <option value="dine_in">Dine In</option>
+                                    <option value="takeaway">Take Away</option>
+                                </select>
+                            </div>
+
                             <button type="submit" class="btn btn-danger font-weight-bold rounded-pill px-5">
                                 Checkout Sekarang
                             </button>

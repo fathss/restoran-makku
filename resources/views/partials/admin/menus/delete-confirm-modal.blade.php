@@ -1,4 +1,3 @@
-{{-- Delete Confirmation Modal --}}
 @php $modalId = 'deleteModal' . ($menu->menu_id ?? ''); @endphp
 <div class="modal fade" id="{{ $modalId }}" tabindex="-1" aria-labelledby="{{ $modalId }}Label" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">

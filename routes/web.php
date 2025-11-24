@@ -18,13 +18,11 @@ Route::middleware(['auth', 'adminOnly'])->group(function () {
     Route::resource('/admin/menus', Admin\AdminMenuController::class)->names('admin.menus');
 
     // Order Management
-    // Route::resource('/admin/orders', Admin\AdminOrderController::class)->names('admin.orders');
     Route::get('/admin/orders', [Admin\AdminOrderController::class, 'index'])->name('admin.orders.index');
     Route::get('/admin/orders/{order_id}/approve', [Admin\AdminOrderController::class, 'approve'])->name('admin.orders.approve');
     Route::get('/admin/orders/{order_id}/cancel', [Admin\AdminOrderController::class, 'cancel'])->name('admin.orders.cancel');
 
     // Reservation Management
-    // Route::resource('/admin/reservations', Admin\AdminReservationController::class)->names('admin.reservations');
     Route::get('/admin/reservations', [Admin\AdminReservationController::class, 'index'])->name('admin.reservations.index');
     Route::get('/admin/reservations/{reservation_id}/approve', [Admin\AdminReservationController::class, 'approve'])->name('admin.reservations.approve');
     Route::get('/admin/reservations/{reservation_id}/cancel', [Admin\AdminReservationController::class, 'cancel'])->name('admin.reservations.cancel');
@@ -36,7 +34,6 @@ Route::middleware(['auth', 'adminOnly'])->group(function () {
     Route::get('/', [Admin\AdminController::class, 'index'])->name('admin.page');
 
     //konfirmasi reservasi
-    // Tambahkan di dalam Route Admin (middleware auth, adminOnly/checkrole)
     Route::post('/admin/reservations/{reservation}/confirm', [Admin\AdminReservationController::class, 'confirm'])->name('admin.reservations.confirm');
 
     // Route untuk menampilkan daftar reservasi dan pencarian
@@ -46,12 +43,7 @@ Route::middleware(['auth', 'adminOnly'])->group(function () {
     Route::put('/admin/reservations/{reservation}', [Admin\AdminReservationController::class, 'update'])->name('admin.reservations.update');
 });
 
-// Route::get('/admin/dashboard', function () {
-//     return view('admin.dashboard');
-// })->name('admin.dashboard');
-
 // tanpa login
-// Halaman Utama (Landing Page)
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Halaman Menu & Search
@@ -71,7 +63,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/reservation', [ReservationController::class, 'store'])->name('reservation.store');
 
     //Fitur Profil
-    //Lihat Profil
     Route::get('/my-profile', [ProfileController::class, 'show'])->name('profile.show');
 
     //Edit Profil & Password 

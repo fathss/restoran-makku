@@ -5,7 +5,6 @@
         </p>
     </header>
 
-    {{-- Form Verifikasi Email (biarkan dulu jika tidak ada verifikasi email) --}}
     <form id="send-verification" method="post" action="{{ route('verification.send') }}">
         @csrf
     </form>

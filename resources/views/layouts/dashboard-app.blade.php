@@ -1,9 +1,5 @@
 @extends('layouts.master')
 
-{{-- Title (opsional) --}}
-{{-- @section('title', 'Dashboard Application') --}}
-
-{{-- Body --}}
 @section('body')
     <div class="app-wrapper">
         @include('partials.admin.navbar')

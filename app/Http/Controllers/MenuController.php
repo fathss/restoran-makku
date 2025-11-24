@@ -11,7 +11,6 @@ class MenuController extends Controller
     {
         $query = Menu::where('available', true);
 
-        // Logika Search
         if ($request->has('search')) {
             $query->where('menu_name', 'like', '%' . $request->search . '%');
         }

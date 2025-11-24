@@ -31,7 +31,6 @@
                     </span>
                     @php
                         $orderDetailsCollection = $order_details ?? collect();
-                        // Sum the quantity if present, otherwise count entries
                         $totalOrdered = $orderDetailsCollection->where('menu_id', $menu->menu_id)->sum('quantity');
                     @endphp
                     <small class="text-muted">Total Order: <span class="fw-bold">{{ $totalOrdered }}</span></small>
