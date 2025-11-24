@@ -15,18 +15,23 @@
                     <form action="{{ route('admin.menus.update', $menu->menu_id) }}" method="POST" enctype="multipart/form-data">
                         @method('PUT')
                         @include('partials.admin.menus.__form', ['menu' => $menu])
-                        
-                        <div class="d-flex gap-2 mt-4">
-                            <button type="submit" class="btn btn-danger px-5">
-                                <i class="bi bi-check-circle"></i> Simpan Perubahan
+
+                        {{-- Button group Bootstrap 4 --}}
+                        <div class="d-flex mt-4">
+                            <button type="submit" class="btn btn-success px-5 mr-2">
+                                <i class="fa fa-check-circle"></i> Simpan Perubahan
                             </button>
-                            <a href="{{ route('admin.menus.index') }}" class="btn btn-secondary px-5">
-                                <i class="bi bi-x-circle"></i> Batal
+
+                            <a href="{{ route('admin.menus.index') }}" class="btn btn-secondary px-5 mr-2">
+                                <i class="fa fa-times-circle"></i> Batal
                             </a>
-                            <button type="button" class="btn btn-outline-danger px-5 ms-auto" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $menu->menu_id }}">
-                                <i class="bi bi-trash"></i> Hapus
+
+                            <button type="button" class="btn btn-outline-danger px-5 ml-auto"
+                                data-toggle="modal" data-target="#deleteModal{{ $menu->menu_id }}">
+                                <i class="fa fa-trash"></i> Hapus
                             </button>
                         </div>
+
                     </form>
                 </div>
             </div>

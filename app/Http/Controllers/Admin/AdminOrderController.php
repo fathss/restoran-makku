@@ -15,19 +15,22 @@ class AdminOrderController extends Controller
     {
         $search = $request->search;
 
-        $query = Order::with('user')
-            ->where('status', 'pending');
+        $filter = function ($status) use ($search) {
+            return Order::with('user')
+                ->where('status', $status)
+                ->when($search, function ($q) use ($search) {
+                    $q->whereHas('user', function ($u) use ($search) {
+                        $u->where('name', 'like', "%{$search}%");
+                    });
+                })
+                ->get();
+        };
 
-        // Filter pencarian
-        if ($search) {
-            $query->whereHas('user', function ($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%");
-            });
-        }
-
-        $orders = $query->get();
-
-        return view('admin.orders.index', compact('orders'));
+        return view('admin.orders.index', [
+            'pendingOrders'   => $filter(Order::STATUS_PENDING),
+            'completedOrders' => $filter(Order::STATUS_COMPLETED),
+            'canceledOrders'  => $filter(Order::STATUS_CANCELED),
+        ]);
     }
 
 

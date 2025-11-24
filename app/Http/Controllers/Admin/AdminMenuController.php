@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Menu;
 use App\Models\OrderDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class AdminMenuController extends Controller
 {
@@ -42,16 +43,27 @@ class AdminMenuController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'menu_name' => 'required|string|max:50',
             'description' => 'nullable|string|max:255',
             'price' => 'required|numeric|min:0',
             'category' => 'required|in:Makanan,Minuman,Snack',
             'available' => 'required|in:0,1',
-            'image_url' => 'nullable|image|max:2048',
+            'image_url' => 'nullable|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
-        Menu::create($request->all());
+        $data = $validatedData;
+
+        if ($request->hasFile('image_url')) {
+
+            $imageFile = $request->file('image_url');
+            $extension = $imageFile->getClientOriginalExtension();
+            $fileName = Carbon::now()->timestamp . '.' . $extension;
+            $path = $imageFile->storeAs('img', $fileName, 'public_uploads');
+            $data['image_url'] = $path;
+        }
+
+        Menu::create($data);
 
         return redirect()->route('admin.menus.index')
             ->with('success', 'Menu berhasil ditambahkan!');
@@ -79,17 +91,29 @@ class AdminMenuController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'menu_name' => 'required|string|max:50',
             'description' => 'nullable|string|max:255',
             'price' => 'required|numeric|min:0',
             'category' => 'required|in:Makanan,Minuman,Snack',
             'available' => 'required|in:0,1',
-            'image_url' => 'nullable|image|max:2048',
+            'image_url' => 'nullable|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
         $menu = Menu::findOrFail($id);
-        $menu->update($request->all());
+
+        $data = $validatedData;
+
+        if ($request->hasFile('image_url')) {
+
+            $imageFile = $request->file('image_url');
+            $extension = $imageFile->getClientOriginalExtension();
+            $fileName = Carbon::now()->timestamp . '.' . $extension;
+            $path = $imageFile->storeAs('img', $fileName, 'public_uploads');
+            $data['image_url'] = $path;
+        }
+
+        $menu->update($data);
 
         return redirect()->route('admin.menus.index')
             ->with('success', 'Menu berhasil diperbarui!');

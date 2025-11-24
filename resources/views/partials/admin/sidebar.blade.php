@@ -1,70 +1,94 @@
-<aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
-  <div class="sidebar-brand">
-    <a href="./index.html" class="brand-link">
-      <span class="brand-text fw-bold fs-5">ADMIN</span>
-    </a>
-  </div>
-  <div class="sidebar-wrapper">
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <!-- Brand Logo -->
+  <a href="index3.html" class="brand-link text-center">
+    <span class="brand-text font-weight-bold">ADMIN PAGE</span>
+  </a>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <!-- Sidebar user panel -->
+    <div class="user-panel mt-3 pb-3 mb-3 text-center">
+      <div class="info">
+        <a href="#" class="d-block">
+          <i class="bi bi-person-circle" style="font-size: 2rem;"></i><br>
+          {{ Auth::user()->name }}
+        </a>
+      </div>
+    </div>
+
+    <!-- Sidebar Menu -->
     <nav class="mt-2">
-      <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="navigation" aria-label="Main navigation" data-accordion="false" id="navigation">
-        <li class="nav-item">
-          <a href="{{ route('admin.index') }}" class="nav-link active bg-primary p-3">
-            <i class="nav-icon bi bi-speedometer"></i>
-            <p>Dashboard</p>
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <li class="nav-item mt-2">
+          <a href="{{ route('admin.index') }}" class="nav-link active bg-danger p-3">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
+            <p>
+              Dashboard
+            </p>
           </a>
         </li>
-        <li class="nav-header fw-light">MANAJEMEN PELANGGAN</li>
+        <li class="nav-header">MANAJEMEN PELANGGAN</li>
         <li class="nav-item">
           <a href="{{ route('admin.menus.index') }}" class="nav-link">
-            <i class="nav-icon bi bi-book"></i>
-            <p>Menu</p>
+            <i class="nav-icon fas fa-book-open"></i>
+            <p>
+              Menu
+            </p>
           </a>
         </li>
-
         <li class="nav-item">
-          <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-receipt"></i>
-              <p>
-                Transaksi
-                @if ($totalTransactions > 0)
-                  <span class="nav-badge badge text-bg-danger me-3">
-                    {{ $totalTransactions ?? 0 }}
-                  </span>
-                @endif
-                <i class="nav-arrow bi bi-chevron-right"></i>
-              </p>
+          <a href="" class="nav-link">
+            <i class="nav-icon fas fa-receipt"></i>
+            <p>
+              Transaksi
+              <i class="fas fa-angle-left right"></i>
+              @if ($totalPendings > 0)
+                <span class="badge badge-warning right">
+                  {{ $totalPendings ?? 0}}
+                </span>
+              @endif
+            </p>
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
               <a href="{{ route('admin.orders.index') }}" class="nav-link">
-                <i class="nav-icon fas fa-list-check"></i>
-                <p>
-                  Pesanan
-                  @if ($totalOrders > 0)
-                    <span class="nav-badge badge text-bg-danger">
-                      {{ $totalOrders ?? 0 }}
-                    </span>
-                  @endif
-                </p>
+                <i class="far fa-circle nav-icon"></i>
+                <p>Pesanan</p>
+                @if ($totalPendingOrders > 0)
+                  <span class="badge badge-warning right">
+                    {{ $totalPendingOrders ?? 0}}
+                  </span>
+                @endif
               </a>
             </li>
             <li class="nav-item">
               <a href="{{ route('admin.reservations.index') }}" class="nav-link">
-                <i class="nav-icon fas fa-calendar-check"></i>
-                <p>
-                  Reservasi
-                  @if ($totalReservations > 0)
-                    <span class="nav-badge badge text-bg-danger">
-                      {{ $totalReservations ?? 0 }}
-                    </span>
-                  @endif
-                </p>
+                <i class="far fa-circle nav-icon"></i>
+                <p>Reservasi</p>
+                @if ($totalPendingReservations > 0)
+                  <span class="badge badge-warning right">
+                    {{ $totalPendingReservations ?? 0}}
+                @endif
+                </span>
               </a>
-            </li>
           </ul>
         </li>
+        <li class="nav-header">LAINNYA</li>
+        <li class="nav-item">
+            <a href="{{ route('logout') }}" class="nav-link"
+                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <i class="nav-icon fas fa-right-from-bracket"></i>
+                <p>Logout</p>
+            </a>
+
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                @csrf
+            </form>
         </li>
       </ul>
     </nav>
+    <!-- /.sidebar-menu -->
   </div>
+  <!-- /.sidebar -->
 </aside>

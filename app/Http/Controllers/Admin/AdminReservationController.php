@@ -15,19 +15,22 @@ class AdminReservationController extends Controller
     {
         $search = $request->search;
 
-        $query = Reservation::with('user')
-            ->where('status', Reservation::STATUS_PENDING);
+        $filter = function ($status) use ($search) {
+            return Reservation::with('user')
+                ->where('status', $status)
+                ->when($search, function ($q) use ($search) {
+                    $q->whereHas('user', function ($u) use ($search) {
+                        $u->where('name', 'like', "%{$search}%");
+                    });
+                })
+                ->get();
+        };
 
-        // Filter pencarian
-        if ($search) {
-            $query->whereHas('user', function ($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%");
-            });
-        }
-
-        $reservations = $query->get();
-
-        return view('admin.reservations.index', compact('reservations'));
+        return view('admin.reservations.index', [
+            'pendingReservations'   => $filter(Reservation::STATUS_PENDING),
+            'completedReservations' => $filter(Reservation::STATUS_COMPLETED),
+            'canceledReservations'  => $filter(Reservation::STATUS_CANCELED),
+        ]);
     }
 
     public function approve($id)

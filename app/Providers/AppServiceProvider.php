@@ -22,15 +22,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        View::composer('partials.admin.sidebar', function ($view) {
-            $totalOrders = Order::where('status', Order::STATUS_PENDING)->count();
-            $totalReservations = Reservation::where('status', Reservation::STATUS_PENDING)->count();
-            $totalTransactions = $totalOrders + $totalReservations;
+        View::composer(['partials.admin.sidebar'], function ($view) {
+            $totalPendingOrders = Order::where('status', Order::STATUS_PENDING)->count();
+            $totalPendingReservations = Reservation::where('status', Reservation::STATUS_PENDING)->count();
+            $totalPendings = $totalPendingOrders + $totalPendingReservations;
 
             $view->with([
-                'totalOrders' => $totalOrders,
-                'totalReservations' => $totalReservations,
-                'totalTransactions' => $totalTransactions,
+                'totalPendingOrders' => $totalPendingOrders,
+                'totalPendingReservations' => $totalPendingReservations,
+                'totalPendings' => $totalPendings,
             ]);
         });
     }

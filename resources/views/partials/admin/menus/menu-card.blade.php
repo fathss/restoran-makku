@@ -1,18 +1,20 @@
 <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-    <div class="card h-100 shadow-sm border-0 hover-effect">
-        <div class="position-relative">
+    <div class="card card-outline card-danger h-100 shadow-sm hover-effect">
+        <div class="position-relative"> 
             <img src="{{ $menu->image_url ? asset($menu->image_url) : 'https://placehold.co/300x200?text=No+Image' }}" 
-                class="card-img-top menu-img" 
+                class="card-img-top img-fluid"
                 alt="{{ $menu->menu_name }}"
-                style="{{ $menu->available == 0 ? 'filter: blur(5px);' : '' }}">
+                style="
+                    {{ $menu->available == 0 ? 'filter: blur(5px);' : '' }}
+                    height: 200px;
+                    object-fit: cover;
+                ">
+            
             @if ($menu->available == 0)
-                <div class="position-absolute top-50 start-50 translate-middle" style="z-index: 10;">
-                    <span class="badge bg-danger fs-6 px-4 py-2" style="filter: none;">Not Available</span>
+                <div class="position-absolute" style="top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10;">
+                    <span class="badge badge-danger fs-6 px-4 py-2" style="filter: none;">Not Available</span>
                 </div>
             @endif
-            <button type="button" class="btn btn-danger rounded-circle position-absolute top-0 end-0 m-2" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $menu->menu_id }}" style="z-index: 10; filter: none;">
-                <i class="bi bi-trash"></i>
-            </button>
         </div>
         
         <div class="card-body d-flex flex-column">
@@ -24,6 +26,7 @@
             
             <hr class="my-2">
 
+            {{-- mt-2 (margin-top) tetap sama --}}
             <div class="d-flex justify-content-between align-items-center mt-2">
                 <div>
                     <span class="fw-bold text-danger fs-5 d-block">
@@ -36,15 +39,18 @@
                     <small class="text-muted">Total Order: <span class="fw-bold">{{ $totalOrdered }}</span></small>
                 </div>
                 
-                @auth
-                    <a href="{{ route('admin.menus.edit', $menu->menu_id) }}" class="btn btn-outline-danger btn-sm rounded-pill" style="filter: none; opacity: 1;">
-                        <i class="fas fa-pen-to-square"></i> Edit
+                <div class="d-flex align-items-center">
+                    <a href="{{ route('admin.menus.edit', $menu->menu_id) }}"
+                    class="btn btn-outline-danger btn-sm rounded-pill mr-2">
+                        <i class="fas fa-pen-to-square"></i>
                     </a>
-                @else
-                    <button type="button" class="btn btn-outline-danger btn-sm rounded-pill" data-bs-toggle="modal" data-bs-target="#authModal">
-                        <i class="fas fa-plus"></i> Pesan
+
+                    <button type="button"
+                        class="btn btn-outline-danger btn-sm rounded-pill"
+                        data-toggle="modal" data-target="#deleteModal{{ $menu->menu_id }}">
+                        <i class="bi bi-trash"></i>
                     </button>
-                @endauth
+                </div>
             </div>
         </div>
     </div>

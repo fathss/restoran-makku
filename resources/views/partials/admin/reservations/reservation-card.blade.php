@@ -1,26 +1,36 @@
 <div class="col-lg-3 col-md-4 col-sm-6">
     <div class="card mb-4 shadow-sm border-0">
+
         <div class="card-header bg-danger text-white">
             <h5 class="card-title fw-bold">Reservasi #{{ $reservation->reservation_id }}</h5>
         </div>
-        <div class="card-body d-flex flex-column">
-            <p class="card-text"><strong>Nama Pelanggan:</strong> {{ $reservation->user->name }}</p>
-            <p class="card-text"><strong>Tanggal Reservasi:</strong> {{ $reservation->reservation_time->format('d-m-Y') }}</p>
-            <p class="card-text"><strong>Waktu Reservasi:</strong> {{ $reservation->reservation_time->format('H:i') }}</p>
-            <p class="card-text"><strong>Jumlah Tamu:</strong> {{ $reservation->amount_people }}</p>
-            <p class="card-text"><strong>Status:</strong> 
-                <span class="badge bg-warning text-dark">Pending</span>
+
+        <div class="card-body">
+            <p><strong>Nama Pelanggan:</strong> {{ $reservation->user->name }}</p>
+            <p><strong>Tanggal:</strong> {{ $reservation->reservation_time->format('d-m-Y') }}</p>
+            <p><strong>Waktu:</strong> {{ $reservation->reservation_time->format('H:i') }}</p>
+            <p><strong>Status:</strong>
+                @include('partials.admin.shared.status-badge', ['status' => $reservation->status])
             </p>
         </div>
-        <div class="card-footer mb-2">
-            <div class="d-flex justify-content-center align-items-center mt-2">
-                <a href="{{ route('admin.reservations.approve', $reservation->reservation_id) }}" class="btn btn-success me-2">
+
+        <div class="card-footer d-flex justify-content-center">
+            <button 
+                class="btn btn-outline-primary"
+                data-toggle="modal"
+                data-target="#reservationModal{{ $reservation->reservation_id }}">
+                <i class="fas fa-search"></i>
+            </button>
+            @if ($reservation->status == 'pending')
+                <a href="{{ route('admin.reservations.approve', $reservation->reservation_id) }}" class="btn btn-outline-success ml-2 mr-2">
                     <i class="bi bi-check-lg"></i>
                 </a>
-                <a href="{{ route('admin.reservations.cancel', $reservation->reservation_id) }}" class="btn btn-danger">
+                <a href="{{ route('admin.reservations.cancel', $reservation->reservation_id) }}" class="btn btn-outline-danger">
                     <i class="bi bi-x"></i>
                 </a>
-            </div>
+            @endif
         </div>
     </div>
 </div>
+
+@include('partials.admin.reservations.reservation-detail-modal', ['reservation' => $reservation])
