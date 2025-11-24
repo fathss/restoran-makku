@@ -1,15 +1,17 @@
-@extends('layouts.main') @section('content')
+@extends('layouts.main') 
+
+@section('content')
 
 <div class="position-relative">
-
-    <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="3000">
+    
+    <div id="heroCarousel" class="carousel slide carousel-fade" data-ride="carousel" data-interval="3000">
         
         <div class="carousel-indicators z-index-2">
-            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true"></button>
-            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
-            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
-            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="3"></button>
-            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="4"></button>
+            <button type="button" data-target="#heroCarousel" data-slide-to="0" class="active" aria-current="true"></button>
+            <button type="button" data-target="#heroCarousel" data-slide-to="1"></button>
+            <button type="button" data-target="#heroCarousel" data-slide-to="2"></button>
+            <button type="button" data-target="#heroCarousel" data-slide-to="3"></button>
+            <button type="button" data-target="#heroCarousel" data-slide-to="4"></button>
         </div>
 
         <div class="carousel-inner">
@@ -39,6 +41,16 @@
                 <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-50"></div>
             </div>
         </div>
+        
+        <a class="carousel-control-prev" href="#heroCarousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#heroCarousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+
     </div>
 
     <div class="hero-text position-absolute top-50 start-50 translate-middle text-center text-white w-100 z-index-1 px-3">
@@ -48,8 +60,7 @@
     </div>
 
 </div>
-
-<div class="container my-5">
+<div class="mt-5"> 
     <h2 class="text-center mb-4 fw-bold text-makku">Menu Terbaru</h2>
     <div class="row">
         @forelse($menus as $menu)
@@ -63,9 +74,9 @@
             </div>
         </div>
         @empty
-            <div class="col-12 text-center">
-                <div class="alert alert-info">Belum ada menu yang ditambahkan.</div>
-            </div>
+        <div class="col-12 text-center">
+            <div class="alert alert-info">Belum ada menu yang ditambahkan.</div>
+        </div>
         @endforelse
     </div>
 </div>
