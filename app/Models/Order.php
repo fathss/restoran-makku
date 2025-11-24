@@ -7,11 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
+    const STATUS_PENDING = 'pending';
+    const STATUS_COMPLETED = 'completed';
+    const STATUS_CANCELED = 'cancelled';
+
     use HasFactory;
     protected $primaryKey = 'order_id';
 
     protected $fillable = [
-        'user_id', 'total_amount', 'status', 'order_type', 'order_time'
+        'user_id',
+        'total_amount',
+        'status',
+        'order_type',
+        'order_time'
     ];
 
     protected $casts = [

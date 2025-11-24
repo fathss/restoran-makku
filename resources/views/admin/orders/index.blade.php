@@ -11,7 +11,7 @@
         <div class="col-md-9 d-flex align-items-center justify-content-center gap-2">
             <div class="flex-grow-1">
                 <form action="{{ route('admin.orders.index') }}" method="GET" class="d-flex gap-2">
-                    <input type="text" name="search" class="form-control rounded-pill" placeholder="Cari Pesanan" value="{{ request('search') }}">
+                    <input type="text" name="search" class="form-control rounded-pill" placeholder="Cari Pesanan">
                     <button type="submit" class="btn btn-danger rounded-pill px-4">
                         <i class="bi bi-search"></i>
                     </button>

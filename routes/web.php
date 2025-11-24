@@ -18,10 +18,16 @@ Route::middleware(['auth', 'adminOnly'])->group(function () {
     Route::resource('/admin/menus', Admin\AdminMenuController::class)->names('admin.menus');
 
     // Order Management
-    Route::resource('/admin/orders', Admin\AdminOrderController::class)->names('admin.orders');
+    // Route::resource('/admin/orders', Admin\AdminOrderController::class)->names('admin.orders');
+    Route::get('/admin/orders', [Admin\AdminOrderController::class, 'index'])->name('admin.orders.index');
+    Route::get('/admin/orders/{order_id}/approve', [Admin\AdminOrderController::class, 'approve'])->name('admin.orders.approve');
+    Route::get('/admin/orders/{order_id}/cancel', [Admin\AdminOrderController::class, 'cancel'])->name('admin.orders.cancel');
 
     // Reservation Management
-    Route::resource('/admin/reservations', Admin\AdminReservationController::class)->names('admin.reservations');
+    // Route::resource('/admin/reservations', Admin\AdminReservationController::class)->names('admin.reservations');
+    Route::get('/admin/reservations', [Admin\AdminReservationController::class, 'index'])->name('admin.reservations.index');
+    Route::get('/admin/reservations/{reservation_id}/approve', [Admin\AdminReservationController::class, 'approve'])->name('admin.reservations.approve');
+    Route::get('/admin/reservations/{reservation_id}/cancel', [Admin\AdminReservationController::class, 'cancel'])->name('admin.reservations.cancel');
 
     // Dashboard Admin
     Route::resource('/admin', Admin\AdminController::class)->names('admin');
@@ -91,7 +97,7 @@ Route::get('/menu', [MenuController::class, 'index'])->name('menu.index');
 
 // ketika login
 Route::middleware('auth')->group(function () {
-    
+
 
     //Fitur Cart
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
@@ -104,12 +110,12 @@ Route::middleware('auth')->group(function () {
     //Fitur Profil
     //Lihat Profil
     Route::get('/my-profile', [ProfileController::class, 'show'])->name('profile.show');
-    
+
     //Edit Profil & Password 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    
+
     //Route Hapus Item
     Route::delete('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
 
@@ -126,4 +132,4 @@ Route::middleware('auth')->group(function () {
     Route::patch('/cart/update', [CartController::class, 'updateQuantity'])->name('cart.update');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

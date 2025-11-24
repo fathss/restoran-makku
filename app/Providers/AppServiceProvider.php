@@ -23,8 +23,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         View::composer('partials.admin.sidebar', function ($view) {
-            $totalOrders = Order::count();
-            $totalReservations = Reservation::count();
+            $totalOrders = Order::where('status', Order::STATUS_PENDING)->count();
+            $totalReservations = Reservation::where('status', Reservation::STATUS_PENDING)->count();
             $totalTransactions = $totalOrders + $totalReservations;
 
             $view->with([

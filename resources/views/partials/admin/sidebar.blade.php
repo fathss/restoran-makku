@@ -52,10 +52,12 @@
           <a href="#" class="nav-link">
               <i class="nav-icon fas fa-receipt"></i>
               <p>
-                Transaksi 
-                <span class="nav-badge badge text-bg-danger me-3">
-                  {{ $totalTransactions ?? 0 }}
-                </span>
+                Transaksi
+                @if ($totalTransactions > 0)
+                  <span class="nav-badge badge text-bg-danger me-3">
+                    {{ $totalTransactions ?? 0 }}
+                  </span>
+                @endif
                 <i class="nav-arrow bi bi-chevron-right"></i>
               </p>
           </a>
@@ -66,9 +68,11 @@
                 <i class="nav-icon fas fa-list-check"></i>
                 <p>
                   Pesanan
-                  <span class="nav-badge badge text-bg-danger">
-                    {{ $totalOrders ?? 0 }}
-                  </span>
+                  @if ($totalOrders > 0)
+                    <span class="nav-badge badge text-bg-danger">
+                      {{ $totalOrders ?? 0 }}
+                    </span>
+                  @endif
                 </p>
               </a>
             </li>
@@ -78,9 +82,11 @@
                 <i class="nav-icon fas fa-calendar-check"></i>
                 <p>
                   Reservasi
-                  <span class="nav-badge badge text-bg-danger">
-                    {{ $totalReservations ?? 0 }}
-                  </span>
+                  @if ($totalReservations > 0)
+                    <span class="nav-badge badge text-bg-danger">
+                      {{ $totalReservations ?? 0 }}
+                    </span>
+                  @endif
                 </p>
               </a>
             </li>

@@ -30,7 +30,7 @@
                         Rp {{ number_format($menu->price, 0, ',', '.') }}
                     </span>
                     @php
-                        $orderDetailsCollection = isset($order_details) ? $order_details : collect();
+                        $orderDetailsCollection = $order_details ?? collect();
                         // Sum the quantity if present, otherwise count entries
                         $totalOrdered = $orderDetailsCollection->where('menu_id', $menu->menu_id)->sum('quantity');
                     @endphp

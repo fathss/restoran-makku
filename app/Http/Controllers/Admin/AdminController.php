@@ -14,14 +14,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $totalOrders = Order::where('status', 'pending')->count();
-        $totalReservations = Reservation::where('status', 'pending')->count();
-
-        return view('admin.dashboard', [
-            'totalOrders' => $totalOrders,
-            'totalReservations' => $totalReservations,
-            'totalTransactions' => $totalOrders + $totalReservations,
-        ]);
+        return view('admin.dashboard');
     }
 
     /**

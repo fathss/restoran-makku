@@ -14,16 +14,19 @@ class AdminMenuController extends Controller
      */
     public function index(Request $request)
     {
-        $menus = Menu::all();
+        $menus = Menu::query();
 
         if ($request->has('search')) {
-            $menus = Menu::where('menu_name', 'like', '%' . $request->search . '%')->get();
+            $menus->where('menu_name', 'like', '%' . $request->search . '%');
         }
 
-        $order_details = OrderDetail::all();
+        $menus = $menus->get();
+
+        $order_details = OrderDetail::whereHas('order', function ($q) {
+            $q->where('status', 'completed');
+        })->get();
 
         return view('admin.menu.index', compact('menus', 'order_details'));
-        // return 'Hello, Admin Menu Controller!';
     }
 
     /**

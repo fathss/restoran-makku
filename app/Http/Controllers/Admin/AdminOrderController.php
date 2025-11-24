@@ -11,15 +11,44 @@ class AdminOrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::with('user')->get();
+        $search = $request->search;
+
+        $query = Order::with('user')
+            ->where('status', 'pending');
+
+        // Filter pencarian
+        if ($search) {
+            $query->whereHas('user', function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%");
+            });
+        }
+
+        $orders = $query->get();
 
         return view('admin.orders.index', compact('orders'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create() {}
+
+    public function approve($id)
+    {
+
+        $order = Order::findOrFail($id);
+        $order->status = Order::STATUS_COMPLETED;
+        $order->save();
+
+        return redirect()->route('admin.orders.index')
+            ->with('success', 'Order approved successfully.');
+    }
+
+    public function cancel($id)
+    {
+        $order = Order::findOrFail($id);
+        $order->status = Order::STATUS_CANCELED;
+        $order->save();
+
+        return redirect()->route('admin.orders.index')
+            ->with('success', 'Order canceled successfully.');
+    }
 }

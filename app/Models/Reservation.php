@@ -7,16 +7,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reservation extends Model
 {
+    const STATUS_PENDING = 'pending';
+    const STATUS_COMPLETED = 'completed';
+    const STATUS_CANCELED = 'cancelled';
+
     use HasFactory;
 
     protected $primaryKey = 'reservation_id';
 
     // IZINKAN KOLOM INI DIISI
     protected $fillable = [
-        'user_id', 
-        'table_number', 
-        'amount_people', 
-        'reservation_time', 
+        'user_id',
+        'table_number',
+        'amount_people',
+        'reservation_time',
         'status'
     ];
 
