@@ -1,41 +1,39 @@
-function togglePasswordVisibility() {
-    const passwordInput = document.getElementById('password');
-    const eyeIcon = document.getElementById('eyeIcon');
+// ==========================================
+// SCRIPT UNTUK ADMINLTE (BOOTSTRAP 4 + JQUERY)
+// ==========================================
 
-    if (passwordInput && eyeIcon) {
-        if (passwordInput.type === 'password') {
-            passwordInput.type = 'text';
-            eyeIcon.classList.remove('fa-eye-slash');
-            eyeIcon.classList.add('fa-eye');
+// 1. FUNGSI TOGGLE PASSWORD (Login/Register)
+function togglePasswordVisibility() {
+    // Kita gunakan jQuery untuk seleksi elemen agar konsisten
+    var passwordInput = $('#password');
+    var eyeIcon = $('#eyeIcon');
+
+    if (passwordInput.length && eyeIcon.length) {
+        if (passwordInput.attr('type') === 'password') {
+            passwordInput.attr('type', 'text');
+            eyeIcon.removeClass('fa-eye-slash').addClass('fa-eye');
         } else {
-            passwordInput.type = 'password';
-            eyeIcon.classList.remove('fa-eye');
-            eyeIcon.classList.add('fa-eye-slash');
+            passwordInput.attr('type', 'password');
+            eyeIcon.removeClass('fa-eye').addClass('fa-eye-slash');
         }
     }
 }
 
-// --- LOGIKA UNTUK MODAL SUKSES OTOMATIS (DENGAN LOG) ---
-document.addEventListener("DOMContentLoaded", function() {
-    console.log("1. Script.js berhasil dimuat!"); // Cek 1
+// 2. FUNGSI MODAL SUKSES OTOMATIS
+$(document).ready(function() {
+    console.log("Script AdminLTE Loaded!");
 
-    const successModalEl = document.getElementById('successModal');
-    
-    if (successModalEl) {
-        console.log("2. Modal ditemukan di HTML!"); // Cek 2
-        
-        // Ambil nilai data-auto-show
-        const shouldShow = successModalEl.getAttribute('data-auto-show');
-        console.log("3. Status data-auto-show adalah:", shouldShow); // Cek 3
+    var modal = $('#successModal');
 
-        if (shouldShow === 'true') {
-            console.log("4. Mencoba memunculkan modal..."); // Cek 4
-            const myModal = new bootstrap.Modal(successModalEl);
-            myModal.show();
-        } else {
-            console.log("4. Modal tidak dimunculkan karena status false.");
+    // Cek apakah modal ada di halaman
+    if (modal.length) {
+        var autoShow = modal.attr('data-auto-show');
+        console.log("Status Auto Show:", autoShow);
+
+        // Cek apakah nilainya 'true'
+        if (autoShow === 'true') {
+            console.log("Menampilkan Modal...");
+            modal.modal('show'); // Syntax Bootstrap 4
         }
-    } else {
-        console.error("2. ERROR: Modal dengan id 'successModal' TIDAK DITEMUKAN di HTML.");
     }
 });
