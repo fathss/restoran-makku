@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // user
-
+        
         // Akun Admin
         User::create([
             'name' => 'Administrator',
@@ -172,17 +172,6 @@ class DatabaseSeeder extends Seeder
             'price' => 10000,
             'category' => 'Makanan',
             'available' => false,
-        ]);
-
-        // order
-
-        // Membuat 1 Order Dummy untuk Customer di atas
-        $order = Order::create([
-            'user_id' => $customer->user_id,
-            'total_amount' => 58000, // (25rb + 25rb + 8rb)
-            'status' => 'pending', // Status pesanan
-            'order_type' => 'dine_in',
-            'order_time' => Carbon::now(),
         ]);
     }
 }
