@@ -13,9 +13,19 @@ class AuthenticatedSessionController extends Controller
 {
     /**
      * Display the login view.
+     * * Tambahkan logika agar user yang sudah login tidak melihat halaman login lagi.
      */
-    public function create(): View
+    public function create(): View|\Illuminate\Http\RedirectResponse // Tambahkan tipe RedirectResponse
     {
+        // Cek apakah user sudah login
+        if (Auth::check()) {
+             $user = Auth::user();
+             if ($user->role === 'admin' || $user->role === 'employee') {
+                 return redirect()->intended(route('admin.dashboard'));
+             }
+             return redirect()->intended(route('home'));
+        }
+
         return view('auth.login');
     }
 
@@ -24,10 +34,21 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
+        // 1. Proses Autentikasi
         $request->authenticate();
 
+        // 2. Buat Sesi Login
         $request->session()->regenerate();
 
+        // 3. LOGIKA PEMISAH ROLE (INI PERUBAHAN UTAMANYA)
+        $user = $request->user();
+
+        // Jika Admin atau Employee -> Ke Dashboard Admin
+        if ($user->role === 'admin' || $user->role === 'employee') {
+            return redirect()->intended(route('admin.index'));
+        }
+
+        // Jika Customer (default) -> Ke Halaman Utama
         return redirect()->intended(route('home'));
     }
 

@@ -21,55 +21,57 @@
     </div>
 
     <div class="col-12">
-        <div class="row">
-            @forelse($menus as $menu)
-            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                <div class="card h-100 card-outline card-danger shadow-sm hover-effect">
-                    
-                    <img src="{{ $menu->image_url ? asset($menu->image_url) : 'https://placehold.co/300x200?text=No+Image' }}" 
-                         class="card-img-top" style="height: 200px; object-fit: cover;" alt="...">
-                    
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="font-weight-bold">{{ $menu->menu_name }}</h5>
+        <div class="container">
+            <div class="row">
+                @forelse($menus as $menu)
+                <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                    <div class="card h-100 card-outline card-danger shadow-sm hover-effect">
                         
-                        <p class="text-muted small flex-fill">
-                            {{ Str::limit($menu->description, 50) }}
-                        </p>
+                        <img src="{{ $menu->image_url ? asset($menu->image_url) : 'https://placehold.co/300x200?text=No+Image' }}" 
+                            class="card-img-top" style="height: 200px; object-fit: cover;" alt="...">
                         
-                        <hr>
-
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="text-danger font-weight-bold h5 mb-0">
-                                Rp {{ number_format($menu->price, 0, ',', '.') }}
-                            </span>
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="font-weight-bold">{{ $menu->menu_name }}</h5>
                             
-                            @auth
-                                <form action="{{ route('cart.add') }}" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="menu_id" value="{{ $menu->menu_id }}">
-                                    <input type="hidden" name="quantity" value="1">
-                                    <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill px-3 font-weight-bold">
+                            <p class="text-muted small flex-fill">
+                                {{ Str::limit($menu->description, 50) }}
+                            </p>
+                            
+                            <hr>
+
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-danger font-weight-bold h5 mb-0">
+                                    Rp {{ number_format($menu->price, 0, ',', '.') }}
+                                </span>
+                                
+                                @auth
+                                    <form action="{{ route('cart.add') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="menu_id" value="{{ $menu->menu_id }}">
+                                        <input type="hidden" name="quantity" value="1">
+                                        <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill px-3 font-weight-bold">
+                                            <i class="fas fa-plus mr-1"></i> Pesan
+                                        </button>
+                                    </form>
+                                @else
+                                    <button type="button" class="btn btn-outline-danger btn-sm rounded-pill px-3 font-weight-bold" data-toggle="modal" data-target="#authModal">
                                         <i class="fas fa-plus mr-1"></i> Pesan
                                     </button>
-                                </form>
-                            @else
-                                <button type="button" class="btn btn-outline-danger btn-sm rounded-pill px-3 font-weight-bold" data-toggle="modal" data-target="#authModal">
-                                    <i class="fas fa-plus mr-1"></i> Pesan
-                                </button>
-                            @endauth
+                                @endauth
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            @empty
-            <div class="col-12 text-center py-5">
-                <div class="alert alert-default-warning">
-                    <i class="fas fa-search fa-2x mb-3 d-block"></i>
-                    <h5>Yah, menu tidak ditemukan...</h5>
-                    <p>Coba cari kata kunci lain atau kembali lagi nanti.</p>
+                @empty
+                <div class="col-12 text-center py-5">
+                    <div class="alert alert-default-warning">
+                        <i class="fas fa-search fa-2x mb-3 d-block"></i>
+                        <h5>Yah, menu tidak ditemukan...</h5>
+                        <p>Coba cari kata kunci lain atau kembali lagi nanti.</p>
+                    </div>
                 </div>
+                @endforelse
             </div>
-            @endforelse
         </div>
     </div>
 </div>
