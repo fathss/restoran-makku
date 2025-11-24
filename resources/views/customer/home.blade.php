@@ -1,73 +1,76 @@
-@extends('layouts.main') @section('content')
+@extends('layouts.main') 
 
-<div class="position-relative">
+@section('content')
 
-    <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="3000">
-        
-        <div class="carousel-indicators z-index-2">
-            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true"></button>
-            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
-            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
-            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="3"></button>
-            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="4"></button>
-        </div>
-
-        <div class="carousel-inner">
+<div class="row mb-4">
+    <div class="col-12">
+        <div id="heroCarousel" class="carousel slide" data-ride="carousel" data-interval="3000">
             
-            <div class="carousel-item active" style="height: 500px;"> 
-                <img src="{{ asset('img/slide-1.png') }}" class="d-block w-100 h-100" style="object-fit: cover;">
-                <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-50"></div>
-            </div>
-            
-            <div class="carousel-item" style="height: 500px;">
-                <img src="{{ asset('img/slide-2.png') }}" class="d-block w-100 h-100" style="object-fit: cover;">
-                <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-50"></div>
+            <ol class="carousel-indicators">
+                <li data-target="#heroCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#heroCarousel" data-slide-to="1"></li>
+                <li data-target="#heroCarousel" data-slide-to="2"></li>
+                <li data-target="#heroCarousel" data-slide-to="3"></li>
+                <li data-target="#heroCarousel" data-slide-to="4"></li>
+            </ol>
+
+            <div class="carousel-inner rounded shadow-sm">
+                <div class="carousel-item active" style="height: 450px;"> 
+                    <img src="{{ asset('img/slide-1.png') }}" class="d-block w-100 h-100" style="object-fit: cover;">
+                    <div class="overlay" style="position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);"></div>
+                </div>
+                <div class="carousel-item" style="height: 450px;">
+                    <img src="{{ asset('img/slide-2.png') }}" class="d-block w-100 h-100" style="object-fit: cover;">
+                    <div class="overlay" style="position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);"></div>
+                </div>
+                <div class="carousel-item" style="height: 450px;">
+                    <img src="{{ asset('img/slide-3.png') }}" class="d-block w-100 h-100" style="object-fit: cover;">
+                    <div class="overlay" style="position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);"></div>
+                </div>
+                <div class="carousel-item" style="height: 450px;">
+                    <img src="{{ asset('img/slide-4.png') }}" class="d-block w-100 h-100" style="object-fit: cover;">
+                    <div class="overlay" style="position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);"></div>
+                </div>
+                <div class="carousel-item" style="height: 450px;">
+                    <img src="{{ asset('img/slide-5.png') }}" class="d-block w-100 h-100" style="object-fit: cover;">
+                    <div class="overlay" style="position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);"></div>
+                </div>
             </div>
 
-            <div class="carousel-item" style="height: 500px;">
-                <img src="{{ asset('img/slide-3.png') }}" class="d-block w-100 h-100" style="object-fit: cover;">
-                <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-50"></div>
-            </div>
-
-            <div class="carousel-item" style="height: 500px;">
-                <img src="{{ asset('img/slide-4.png') }}" class="d-block w-100 h-100" style="object-fit: cover;">
-                <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-50"></div>
-            </div>
-
-            <div class="carousel-item" style="height: 500px;">
-                <img src="{{ asset('img/slide-5.png') }}" class="d-block w-100 h-100" style="object-fit: cover;">
-                <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-50"></div>
+            <div class="hero-text" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; width: 100%; z-index: 10;">
+                <h1 class="display-4 font-weight-bold text-white">Selamat Datang di <span style="font-family: 'Dancing Script';">Makku</span></h1>
+                <p class="lead text-white mb-4">Nikmati hidangan lezat dengan harga bersahabat.</p>
+                <a href="{{ route('menu.index') }}" class="btn btn-danger btn-lg rounded-pill px-5 font-weight-bold shadow">Lihat Menu</a>
             </div>
         </div>
     </div>
-
-    <div class="hero-text position-absolute top-50 start-50 translate-middle text-center text-white w-100 z-index-1 px-3">
-        <h1 class="display-3 fw-bold">Selamat Datang di Resto <span class="brand-logo-home">Makku</span></h1>
-        <p class="lead mb-4">Nikmati hidangan lezat dengan harga bersahabat.</p>
-        <a href="{{ route('menu.index') }}" class="btn btn-warning btn-lg fw-bold">Lihat Menu</a>
-    </div>
-
 </div>
 
-<div class="container my-5">
-    <h2 class="text-center mb-4 fw-bold text-makku">Menu Terbaru</h2>
+<div class="container">
     <div class="row">
+        <div class="col-12 text-center mb-4">
+            <h2 class="font-weight-bold" style="color: #ff3b30;">Menu Unggulan</h2>
+        </div>
+
         @forelse($menus as $menu)
-        <div class="col-md-4 mb-4">
-            <div class="card h-100 shadow-sm border-0">
-                <img src="{{ $menu->image_url ?? 'https://dummyimage.com/600x400/000/fff&text=Menu' }}" class="card-img-top" style="height: 200px; object-fit: cover;">
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100 card-outline card-danger hover-effect">
+                <img src="{{ $menu->image_url ? asset($menu->image_url) : 'https://placehold.co/300x200' }}" 
+                    class="card-img-top" style="height: 220px; object-fit: cover;" alt="...">
+                
                 <div class="card-body text-center">
-                    <h5 class="card-title fw-bold">{{ $menu->menu_name }}</h5>
-                    <p class="text-price-makku">Rp {{ number_format($menu->price, 0, ',', '.') }}</p>
+                    <h5 class="font-weight-bold">{{ $menu->menu_name }}</h5>
+                    <p class="text-danger font-weight-bold h5 mt-2">
+                        Rp {{ number_format($menu->price, 0, ',', '.') }}
+                    </p>
                 </div>
             </div>
         </div>
         @empty
-            <div class="col-12 text-center">
-                <div class="alert alert-info">Belum ada menu yang ditambahkan.</div>
-            </div>
+        <div class="col-12 text-center">
+            <div class="alert alert-default-info">Belum ada menu yang ditambahkan.</div>
+        </div>
         @endforelse
     </div>
 </div>
-
 @endsection

@@ -289,3 +289,12 @@ body.login-page {
 }
 
 
+.input-group-text, 
+.input-group-append .btn {
+    background-color: transparent !important; /* Bikin transparan */
+    border: none !important; /* Hilangkan garis batas kiri */
+}
+
+.form-control-navbar {
+    border: none !important;
+}

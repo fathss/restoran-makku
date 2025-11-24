@@ -1,72 +1,69 @@
 <x-guest-layout>
-
-    <div class="text-center mb-5">
-        <h3 class="fw-bold mb-2" style="color: #333;">Daftar Akun</h3>
-        <p class="text-muted" style="font-size: 0.95rem;">
-            Sudah punya akun Makku? 
-            <a href="{{ route('login') }}" class="text-decoration-none fw-bold" style="color: #0056b3;">
-                Masuk
-            </a>
-        </p>
-    </div>
-
-    <form method="POST" action="{{ route('register') }}">
-        @csrf
-
-        <div class="mb-3">
-            <label for="name" class="form-label">Nama Lengkap</label>
-            <input id="name" class="form-control @error('name') is-invalid @enderror" type="text" name="name" 
-                   placeholder="Masukkan nama Anda" 
-                   :value="old('name')" required autofocus>
-            <x-input-error :messages="$errors->get('name')" class="text-danger small mt-1" />
+    <div class="card card-outline card-danger">
+        <div class="card-header text-center">
+            <a href="{{ route('home') }}" class="h1" style="font-family: 'Dancing Script'; color: #ff3b30;"><b>Makku</b>.</a>
         </div>
+        <div class="card-body">
+            <p class="login-box-msg">Daftar keanggotaan baru</p>
 
-        <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input id="email" class="form-control @error('email') is-invalid @enderror" type="email" name="email" 
-                   placeholder="Contoh: user@email.com" 
-                   :value="old('email')" required>
-            <x-input-error :messages="$errors->get('email')" class="text-danger small mt-1" />
-        </div>
+            <form method="POST" action="{{ route('register') }}">
+                @csrf
 
-        <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
-            <div class="input-group">
-                
-                <input id="password" class="form-control border-end-0 @error('password') is-invalid @enderror" 
-                       type="password" name="password" 
-                       placeholder="Minimal 8 karakter" 
-                       required autocomplete="new-password">
-                
-                <span class="input-group-text bg-white border-start-0 text-muted @error('password') border-red @enderror" 
-                      id="togglePassword" 
-                      style="cursor: pointer;" 
-                      onclick="togglePasswordVisibility()">
-                    <i class="far fa-eye-slash" id="eyeIcon"></i>
-                </span>
+                <div class="input-group mb-3">
+                    <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" placeholder="Nama Lengkap" value="{{ old('name') }}" required autofocus>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-user"></span>
+                        </div>
+                    </div>
+                    @error('name')
+                        <span class="error invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
 
+                <div class="input-group mb-3">
+                    <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email" value="{{ old('email') }}" required>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-envelope"></span>
+                        </div>
+                    </div>
+                    @error('email')
+                        <span class="error invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="input-group mb-3">
+                    <input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror" placeholder="Password" required autocomplete="new-password">
+                    <div class="input-group-append">
+                        <div class="input-group-text" style="cursor: pointer;" onclick="togglePasswordVisibility()">
+                            <span class="fas fa-eye-slash" id="eyeIcon"></span>
+                        </div>
+                    </div>
+                    @error('password')
+                        <span class="error invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="input-group mb-3">
+                    <input type="password" name="password_confirmation" class="form-control" placeholder="Ulangi Password" required>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-danger btn-block">Daftar Sekarang</button>
+                    </div>
+                </div>
+            </form>
+
+            <div class="social-auth-links text-center mt-3">
+                <a href="{{ route('login') }}" class="text-center text-danger font-weight-bold">Saya sudah punya akun</a>
             </div>
-            <x-input-error :messages="$errors->get('password')" class="text-danger small mt-1" />
         </div>
-
-        <div class="mb-4">
-            <label for="password_confirmation" class="form-label">Konfirmasi Password</label>
-            <input id="password_confirmation" class="form-control" type="password" 
-                   name="password_confirmation" placeholder="Ulangi password tadi" required>
-            <x-input-error :messages="$errors->get('password_confirmation')" class="text-danger small mt-1" />
-        </div>
-
-        <div class="d-grid mt-4">
-            <button type="submit" class="btn-makku-red">
-                Daftar Sekarang
-            </button>
-        </div>
-        
-        <div class="text-center mt-3">
-            <small class="text-muted" style="font-size: 0.8rem;">
-                Dengan mendaftar, Anda menyetujui Syarat & Ketentuan kami.
-            </small>
-        </div>
-
-    </form>
+    </div>
 </x-guest-layout>
