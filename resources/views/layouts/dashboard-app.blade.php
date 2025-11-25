@@ -6,13 +6,13 @@
 
         @include('partials.admin.sidebar')
 
-        <section class="content-wrapper">
-            <div class="content">
+        <div class="content-wrapper">
+            <section class="content">
                 <div class="container-fluid py-4">
                     @yield('content')
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
 
         @include('partials.admin.footer')
     </div>

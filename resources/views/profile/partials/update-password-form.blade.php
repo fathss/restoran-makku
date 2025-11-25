@@ -40,7 +40,7 @@
         </div>
 
         <div class="d-flex align-items-center gap-3">
-            <button type="submit" class="btn btn-makku-red rounded-pill px-4 py-2 fw-bold">Simpan Password</button>
+            <button type="submit" class="btn btn-danger rounded-pill px-4 py-2 fw-bold">Simpan Password</button>
         </div>
     </form>
 </section>

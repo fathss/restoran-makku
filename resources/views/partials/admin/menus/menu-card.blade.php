@@ -1,8 +1,8 @@
 <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
     <div class="card card-outline card-danger h-100 shadow-sm hover-effect">
         <div class="position-relative"> 
-            <img src="{{ $menu->image_url ? asset($menu->image_url) : 'https://placehold.co/300x200?text=No+Image' }}" 
-                class="card-img-top img-fluid"
+            <img src="{{ $menu->image_url ? asset($menu->image_url) : 'https://placehold.co/600x400?text=No+Image' }}" 
+                class="card-img-top img-fluid w-100"
                 alt="{{ $menu->menu_name }}"
                 style="
                     {{ $menu->available == 0 ? 'filter: blur(5px);' : '' }}

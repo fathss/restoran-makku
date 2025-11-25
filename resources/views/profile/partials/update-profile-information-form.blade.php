@@ -46,7 +46,7 @@
         </div>
 
         <div class="d-flex align-items-center gap-3">
-            <button type="submit" class="btn btn-makku-red rounded-pill px-4 py-2 fw-bold">Simpan</button>
+            <button type="submit" class="btn btn-danger rounded-pill px-4 py-2 fw-bold">Simpan</button>
         </div>
     </form>
 </section>

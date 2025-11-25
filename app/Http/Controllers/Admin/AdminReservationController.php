@@ -39,8 +39,7 @@ class AdminReservationController extends Controller
         $reservation->status = Reservation::STATUS_COMPLETED;
         $reservation->save();
 
-        return redirect()->route('admin.reservations.index')
-            ->with('success', 'Reservasi berhasil disetujui!');
+        return redirect()->back()->with('success', 'Reservasi berhasil disetujui!');
     }
 
     public function cancel($id)
@@ -49,7 +48,6 @@ class AdminReservationController extends Controller
         $reservation->status = Reservation::STATUS_CANCELED;
         $reservation->save();
 
-        return redirect()->route('admin.reservations.index')
-            ->with('success', 'Reservasi berhasil dibatalkan!');
+        return redirect()->back()->with('success', 'Reservasi berhasil dibatalkan!');
     }
 }

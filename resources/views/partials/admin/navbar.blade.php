@@ -16,7 +16,7 @@
       </a>
 
       <div class="dropdown-menu dropdown-menu-right">
-        <a href="#" class="dropdown-item">
+        <a href="{{ route('admin.show', Auth::user()->user_id) }}" class="dropdown-item">
           <i class="bi bi-person mr-2"></i> Profile
         </a>
 

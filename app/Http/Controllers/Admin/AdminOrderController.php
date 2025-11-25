@@ -41,8 +41,7 @@ class AdminOrderController extends Controller
         $order->status = Order::STATUS_COMPLETED;
         $order->save();
 
-        return redirect()->route('admin.orders.index')
-            ->with('success', 'Order approved successfully.');
+        return redirect()->back()->with('success', 'Order berhasil disetujui!');
     }
 
     public function cancel($id)
@@ -51,7 +50,6 @@ class AdminOrderController extends Controller
         $order->status = Order::STATUS_CANCELED;
         $order->save();
 
-        return redirect()->route('admin.orders.index')
-            ->with('success', 'Order canceled successfully.');
+        return redirect()->back()->with('success', 'Order berhasil dibatalkan!');
     }
 }

@@ -1,4 +1,4 @@
-<div class="card card-outline card-dark mb-4">
+<div class="card card-outline card-danger mb-4">
     <div class="card-header">
         <h3 class="card-title">
             <i class="{{ $icon }} mr-1"></i> {{ $title }}

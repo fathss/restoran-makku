@@ -10,7 +10,7 @@
     <!-- Sidebar user panel -->
     <div class="user-panel mt-3 pb-3 mb-3 text-center">
       <div class="info">
-        <a href="#" class="d-block">
+        <a href="{{ route('admin.show', Auth::user()->user_id) }}" class="d-block">
           <i class="bi bi-person-circle" style="font-size: 2rem;"></i><br>
           {{ Auth::user()->name }}
         </a>
@@ -75,6 +75,12 @@
           </ul>
         </li>
         <li class="nav-header">LAINNYA</li>
+        <li class="nav-item">
+          <a href="{{ route('admin.show', Auth::user()->user_id) }}" class="nav-link">
+            <i class="nav-icon fas fa-user"></i>
+            <p>Profile</p>
+          </a>
+        </li>
         <li class="nav-item">
             <a href="{{ route('logout') }}" class="nav-link"
                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
