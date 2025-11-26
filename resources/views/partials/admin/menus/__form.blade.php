@@ -1,17 +1,49 @@
 @csrf
 <div class="form-row">
     <div class="form-group col-12">
-        <label for="image_url">Upload Gambar</label>
-        <div class="input-group">
-            <input type="file" name="image_url" class="form-control" accept=".jpg, .jpeg, .png, .webp">
-        </div>
+        @if(isset($menu))
+            <label for="image_url">Gambar Menu</label>
 
-        @if ($menu && $menu->image_url)
+            @if ($menu->image_url)
+                @php
+                    $imgData = $menu->image_url;
+                    if (!is_array($imgData)) {
+                        $imgData = [$imgData];
+                    }
+                    $images = array_values(array_filter($imgData));
+                @endphp
+
+                @if(count($images) > 0)
+                    <p class="small text-muted fw-light mb-2 mt-2">Gambar saat ini</p>
+                    <div class="d-flex flex-wrap gap-3">
+                        @foreach($images as $index => $img)
+                            <div class="text-center">
+                                <img src="{{ asset($img) }}" 
+                                    alt="Gambar Saat Ini"
+                                    style="width: 150px; height: 150px; object-fit: cover;" 
+                                    class="img-thumbnail mb-1">
+                                <input type="file" name="replace_image[{{ $index }}]" 
+                                    class="form-control form-control-sm" 
+                                    accept=".jpg,.jpeg,.png,.webp">
+                                <p class="small text-muted fw-light mt-1 mb-0">Ganti gambar ini</p>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
+            @else
+                <p class="small text-muted fw-light mb-2 mt-2">Menu belum memiliki gambar</p>
+            @endif
+
+
             <div class="mt-3">
-                <img src="{{ asset($menu->image_url) }}" alt="Current Image"
-                    style="max-width: 200px; height: auto;" class="img-thumbnail">
-                <p class="small text-muted mt-2">Gambar saat ini</p>
+                <label for="add_image">Tambah Gambar Baru</label>
+                <input type="file" name="image_url[]" class="form-control" accept=".jpg,.jpeg,.png,.webp" multiple>
+                <p class="small text-muted fw-light mt-1 mb-0">Tambahkan satu atau beberapa gambar baru</p>
             </div>
+        @else
+            <label for="image_url">Upload Gambar</label>
+            <input type="file" name="image_url[]" class="form-control" accept=".jpg,.jpeg,.png,.webp" multiple>
+            <p class="small text-muted fw-light mt-1 mb-0">Pilih satu atau beberapa gambar untuk menu baru</p>
         @endif
     </div>
 
@@ -27,7 +59,7 @@
     <div class="form-group col-12">
         <label for="description">Deskripsi</label>
         <textarea name="description" class="form-control"
-            placeholder="Masukkan deskripsi (Opsional)">{{ old('description', $menu->description ?? '') }}</textarea>
+                placeholder="Masukkan deskripsi (Opsional)">{{ old('description', $menu->description ?? '') }}</textarea>
     </div>
 
     <div class="form-group col-md-6">
@@ -45,7 +77,7 @@
     <div class="form-group col-md-6">
         <label for="category">Kategori</label>
         <select name="category"
-            class="form-control @error('category') is-invalid @enderror">
+                class="form-control @error('category') is-invalid @enderror">
             <option disabled selected value="Not Selected">Pilih kategori Menu</option>
             <option value="Makanan" {{ old('category', $menu->category ?? '') == 'Makanan' ? 'selected' : '' }}>Makanan</option>
             <option value="Minuman" {{ old('category', $menu->category ?? '') == 'Minuman' ? 'selected' : '' }}>Minuman</option>

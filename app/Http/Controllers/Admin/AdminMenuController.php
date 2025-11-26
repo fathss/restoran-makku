@@ -49,32 +49,29 @@ class AdminMenuController extends Controller
             'price' => 'required|numeric|min:0',
             'category' => 'required|in:Makanan,Minuman,Snack',
             'available' => 'required|in:0,1',
-            'image_url' => 'nullable|mimes:jpeg,png,jpg,webp|max:2048',
+            'image_url.*' => 'nullable|mimes:jpeg,png,jpg,webp|max:2048'
         ]);
 
         $data = $validatedData;
 
+        // Handle multiple images
         if ($request->hasFile('image_url')) {
-
-            $imageFile = $request->file('image_url');
-            $extension = $imageFile->getClientOriginalExtension();
-            $fileName = Carbon::now()->timestamp . '.' . $extension;
-            $path = $imageFile->storeAs('img', $fileName, 'public_uploads');
-            $data['image_url'] = $path;
+            $images = [];
+            foreach ($request->file('image_url') as $imageFile) {
+                $extension = $imageFile->getClientOriginalExtension();
+                $fileName = Carbon::now()->timestamp . '-' . uniqid() . '.' . $extension;
+                $path = $imageFile->storeAs('img', $fileName, 'public_uploads');
+                $images[] = $path;
+            }
+            $data['image_url'] = $images;
+        } else {
+            $data['image_url'] = [];
         }
 
         Menu::create($data);
 
         return redirect()->route('admin.menus.index')
             ->with('success', 'Menu berhasil ditambahkan!');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
     }
 
     /**
@@ -91,33 +88,52 @@ class AdminMenuController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $menu = Menu::findOrFail($id);
+
         $validatedData = $request->validate([
             'menu_name' => 'required|string|max:50',
             'description' => 'nullable|string|max:255',
             'price' => 'required|numeric|min:0',
             'category' => 'required|in:Makanan,Minuman,Snack',
             'available' => 'required|in:0,1',
-            'image_url' => 'nullable|mimes:jpeg,png,jpg,webp|max:2048',
+            'image_url.*' => 'nullable|mimes:jpeg,png,jpg,webp|max:2048',
+            'replace_image.*' => 'nullable|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
-
-        $menu = Menu::findOrFail($id);
 
         $data = $validatedData;
 
-        if ($request->hasFile('image_url')) {
+        $existingImages = $menu->image_url ?? [];
+        if (!is_array($existingImages)) $existingImages = [$existingImages];
 
-            $imageFile = $request->file('image_url');
-            $extension = $imageFile->getClientOriginalExtension();
-            $fileName = Carbon::now()->timestamp . '.' . $extension;
-            $path = $imageFile->storeAs('img', $fileName, 'public_uploads');
-            $data['image_url'] = $path;
+        $replaceImages = $request->file('replace_image', []);
+        foreach ($replaceImages as $index => $file) {
+            if ($file) {
+                $filename = \Carbon\Carbon::now()->timestamp . '_' . $file->getClientOriginalName();
+                $path = $file->storeAs('img', $filename, 'public_uploads');
+
+                if (isset($existingImages[$index])) {
+                    $existingImages[$index] = $path;
+                }
+            }
         }
+
+        $newImages = $request->file('image_url', []);
+        foreach ($newImages as $file) {
+            if ($file) {
+                $filename = \Carbon\Carbon::now()->timestamp . '_' . $file->getClientOriginalName();
+                $path = $file->storeAs('img', $filename, 'public_uploads');
+                $existingImages[] = $path;
+            }
+        }
+
+        $data['image_url'] = $existingImages;
 
         $menu->update($data);
 
         return redirect()->route('admin.menus.index')
             ->with('success', 'Menu berhasil diperbarui!');
     }
+
 
     /**
      * Remove the specified resource from storage.
