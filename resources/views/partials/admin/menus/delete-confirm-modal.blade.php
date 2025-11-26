@@ -17,7 +17,6 @@
             </div>
 
             <div class="modal-footer">
-                <!-- BS4 dismiss -->
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
 
                 <form action="{{ route('admin.menus.destroy', $menu->menu_id) }}" method="POST" style="display:inline;">

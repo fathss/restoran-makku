@@ -16,7 +16,6 @@
                         @method('PUT')
                         @include('partials.admin.menus.__form', ['menu' => $menu])
 
-                        {{-- Button group Bootstrap 4 --}}
                         <div class="d-flex mt-4">
                             <button type="submit" class="btn btn-success px-5 mr-2">
                                 <i class="fa fa-check-circle"></i> Simpan Perubahan

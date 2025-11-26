@@ -44,14 +44,7 @@
     {{-- Body --}}
     @yield('body')
 
-    <!-- Scripts -->
-    {{-- <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/browser/overlayscrollbars.browser.es6.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
-    <script src="{{ asset('assets/AdminLTE-4.0.0-rc4/src/html/public/js/adminlte.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.min.js" crossorigin="anonymous"></script>
-    <script src="{{ asset('js/script.js') }}"></script> --}}
-    <!-- jQuery -->
+    {{-- Scripts --}}
     <script src="{{ asset('assets/adminlte/plugins/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/adminlte/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
     <script>
@@ -59,9 +52,6 @@
     </script>
     <script src="{{ asset('assets/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/adminlte/plugins/chart.js/Chart.min.js') }}"></script>
-    {{-- <script src="{{ asset('assets/adminlte/plugins/sparklines/sparkline.js') }}"></script> --}}
-    {{-- <script src="{{ asset('assets/adminlte/plugins/jqvmap/jquery.vmap.min.js') }}"></script> --}}
-    {{-- <script src="{{ asset('assets/adminlte/plugins/jqvmap/maps/jquery.vmap.usa.js') }}"></script> --}}
     <script src="{{ asset('assets/adminlte/plugins/jquery-knob/jquery.knob.min.js') }}"></script>
     <script src="{{ asset('assets/adminlte/plugins/moment/moment.min.js') }}"></script>
     <script src="{{ asset('assets/adminlte/plugins/daterangepicker/daterangepicker.js') }}"></script>
@@ -70,7 +60,6 @@
     <script src="{{ asset('assets/adminlte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
     <script src="{{ asset('assets/adminlte/plugins/toastr/toastr.min.js') }}"></script>
     <script src="{{ asset('assets/adminlte/dist/js/adminlte.js') }}"></script>
-    {{-- <script src="{{ asset('assets/adminlte/dist/js/pages/dashboard.js') }}"></script> --}}
 
     {{-- Custom Script --}}
     @yield('script')

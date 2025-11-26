@@ -1,7 +1,5 @@
 @csrf
 <div class="form-row">
-
-    <!-- Upload Gambar -->
     <div class="form-group col-12">
         <label for="image_url">Upload Gambar</label>
         <div class="input-group">
@@ -17,7 +15,6 @@
         @endif
     </div>
 
-    <!-- Nama Menu -->
     <div class="form-group col-12">
         <label for="menu_name">Nama Menu</label>
         <input type="text" name="menu_name"
@@ -27,14 +24,12 @@
         <x-input-error :messages="$errors->get('menu_name')" class="text-danger small mt-1" />
     </div>
 
-    <!-- Deskripsi -->
     <div class="form-group col-12">
         <label for="description">Deskripsi</label>
         <textarea name="description" class="form-control"
             placeholder="Masukkan deskripsi (Opsional)">{{ old('description', $menu->description ?? '') }}</textarea>
     </div>
 
-    <!-- Harga -->
     <div class="form-group col-md-6">
         <label for="price">Harga</label>
         <div class="input-group">
@@ -47,7 +42,6 @@
         </div>
     </div>
 
-    <!-- Kategori -->
     <div class="form-group col-md-6">
         <label for="category">Kategori</label>
         <select name="category"
@@ -60,7 +54,6 @@
         <x-input-error :messages="$errors->get('category')" class="text-danger small mt-1" />
     </div>
 
-    <!-- Ketersediaan -->
     <div class="form-group col-12">
         <label class="d-block">Ketersediaan</label>
 

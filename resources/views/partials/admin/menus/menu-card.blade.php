@@ -26,7 +26,6 @@
             
             <hr class="my-2">
 
-            {{-- mt-2 (margin-top) tetap sama --}}
             <div class="d-flex justify-content-between align-items-center mt-2">
                 <div>
                     <span class="fw-bold text-danger fs-5 d-block">
