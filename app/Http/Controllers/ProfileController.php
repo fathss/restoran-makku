@@ -86,7 +86,9 @@ public function destroy(Request $request): RedirectResponse
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return Redirect::to('/');
+        return Redirect::to('/')
+            ->with('success', 'Akun Anda berhasil dihapus.')
+            ->with('type', 'delete_account');
     }
 
     public function history()

@@ -15,23 +15,23 @@
             </ol>
 
             <div class="carousel-inner rounded shadow-sm">
-                <div class="carousel-item active" style="height: 450px;"> 
+                <div class="carousel-item active" style="height: 550px;"> 
                     <img src="{{ asset('img/slide-1.png') }}" class="d-block w-100 h-100" style="object-fit: cover;">
                     <div class="overlay" style="position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);"></div>
                 </div>
-                <div class="carousel-item" style="height: 450px;">
+                <div class="carousel-item" style="height: 550px;">
                     <img src="{{ asset('img/slide-2.png') }}" class="d-block w-100 h-100" style="object-fit: cover;">
                     <div class="overlay" style="position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);"></div>
                 </div>
-                <div class="carousel-item" style="height: 450px;">
+                <div class="carousel-item" style="height: 550px;">
                     <img src="{{ asset('img/slide-3.png') }}" class="d-block w-100 h-100" style="object-fit: cover;">
                     <div class="overlay" style="position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);"></div>
                 </div>
-                <div class="carousel-item" style="height: 450px;">
+                <div class="carousel-item" style="height: 550px;">
                     <img src="{{ asset('img/slide-4.png') }}" class="d-block w-100 h-100" style="object-fit: cover;">
                     <div class="overlay" style="position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);"></div>
                 </div>
-                <div class="carousel-item" style="height: 450px;">
+                <div class="carousel-item" style="height: 550px;">
                     <img src="{{ asset('img/slide-5.png') }}" class="d-block w-100 h-100" style="object-fit: cover;">
                     <div class="overlay" style="position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);"></div>
                 </div>
@@ -43,15 +43,6 @@
                 <a href="{{ route('menu.index') }}" class="btn btn-danger btn-lg rounded-pill px-5 font-weight-bold shadow">Lihat Menu</a>
             </div>
         </div>
-        
-        <a class="carousel-control-prev" href="#heroCarousel" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#heroCarousel" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
 
     </div>
 </div>
@@ -65,9 +56,20 @@
         @forelse($menus as $menu)
         <div class="col-lg-4 col-md-6 mb-4">
             <div class="card h-100 card-outline card-danger hover-effect">
-                <img src="{{ $menu->image_url ? asset($menu->image_url) : 'https://placehold.co/300x200' }}" 
-                    class="card-img-top" style="height: 220px; object-fit: cover;" alt="...">
-                
+                @php
+                    $imgData = $menu->image_url;
+
+                    if (is_array($imgData) && count($imgData) > 0) {
+                        $singleImage = $imgData[0];
+                    } 
+                    else {
+                        $singleImage = $imgData;
+                    }
+                @endphp
+
+                <img src="{{ $singleImage ? asset($singleImage) : 'https://placehold.co/300x200' }}" 
+                     class="card-img-top" style="height: 220px; object-fit: cover;" alt="...">
+
                 <div class="card-body text-center">
                     <h5 class="font-weight-bold">{{ $menu->menu_name }}</h5>
                     <p class="text-danger font-weight-bold h5 mt-2">

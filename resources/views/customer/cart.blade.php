@@ -28,9 +28,21 @@
                                 <tr>
                                     <td>
                                         <div class="d-flex align-items-center">
-                                            <img src="{{ $details['image'] ? asset($details['image']) : 'https://placehold.co/50' }}" 
-                                                 class="img-circle elevation-1 mr-3" 
-                                                 style="width: 50px; height: 50px; object-fit: cover;">
+                                            {{-- LOGIC PERBAIKAN: Cek apakah gambar array atau string --}}
+                                            @php
+                                                $imgCart = $details['image'] ?? null;
+                                                
+                                                // Jika array, ambil gambar pertama (index 0)
+                                                if (is_array($imgCart) && count($imgCart) > 0) {
+                                                    $imgCart = $imgCart[0];
+                                                }
+                                            @endphp
+
+                                            {{-- TAMPILKAN GAMBAR --}}
+                                            <img src="{{ $imgCart ? asset($imgCart) : 'https://placehold.co/50' }}" 
+                                                class="img-circle elevation-1 mr-3" 
+                                                style="width: 50px; height: 50px; object-fit: cover;">
+                                                
                                             <div>
                                                 <h6 class="mb-0 font-weight-bold">{{ $details['name'] }}</h6>
                                             </div>

@@ -44,6 +44,8 @@
                     @elseif($actionType == 'reservation')
                         <a href="{{ route('profile.history') }}" class="btn btn-danger btn-block rounded-pill">Cek Riwayat</a>
                         <button class="btn btn-light btn-block rounded-pill mt-2" data-dismiss="modal">Tutup</button>
+                    @elseif($actionType == 'delete_account')
+                        <button class="btn btn-light btn-block rounded-pill mt-2" data-dismiss="modal">Tutup</button>
                     @else
                         <a href="{{ route('menu.index') }}" class="btn btn-danger btn-block rounded-pill">Pesan Lagi</a>
                         <button class="btn btn-light btn-block rounded-pill mt-2" data-dismiss="modal">Tutup</button>

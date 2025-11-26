@@ -15,9 +15,6 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        // user
-        
-        // Akun Admin
         User::create([
             'name' => 'Administrator',
             'email' => 'admin@resto.com',
@@ -27,18 +24,7 @@ class DatabaseSeeder extends Seeder
             'address' => 'Kantor Pusat Resto'
         ]);
 
-        // Akun Employee (Dapur/Kasir)
         User::create([
-            'name' => 'Staff Dapur',
-            'email' => 'staff@resto.com',
-            'password' => Hash::make('password'),
-            'role' => 'employee',
-            'phone' => '089876543210',
-            'address' => 'Mess Karyawan'
-        ]);
-
-        // Akun Customer (Pelanggan)
-        $customer = User::create([
             'name' => 'Pelanggan Setia',
             'email' => 'user@gmail.com',
             'password' => Hash::make('password'),
@@ -47,15 +33,15 @@ class DatabaseSeeder extends Seeder
             'address' => 'Jl. Mawar No. 10, Jakarta'
         ]);
 
-        // menu
-
         $menu1 = Menu::create([
             'menu_name' => 'Nasi Goreng Spesial',
             'description' => 'Nasi goreng dengan bumbu rahasia, dilengkapi telur mata sapi dan sate ayam.',
             'price' => 25000,
             'category' => 'Makanan',
             'available' => true,
-            'image_url' => 'img/nasi-goreng.png'
+            'image_url' => [
+                'img/nasi-goreng.png',
+                'img/ayam-bakar.png']
         ]);
 
         $menu2 = Menu::create([
@@ -64,7 +50,7 @@ class DatabaseSeeder extends Seeder
             'price' => 30000,
             'category' => 'Makanan',
             'available' => true,
-            'image_url' => 'img/ayam-bakar.png'
+            'image_url' => ['img/ayam-bakar.png'] 
         ]);
 
         $menu3 = Menu::create([
@@ -73,7 +59,7 @@ class DatabaseSeeder extends Seeder
             'price' => 8000,
             'category' => 'Minuman',
             'available' => true,
-            'image_url' => 'img/es-teh.png'
+            'image_url' => ['img/es-teh.png'] 
         ]);
 
         $menu4 = Menu::create([
@@ -82,7 +68,7 @@ class DatabaseSeeder extends Seeder
             'price' => 35000,
             'category' => 'Makanan',
             'available' => true,
-            'image_url' => 'img/sate-lilit.png'
+            'image_url' => ['img/sate-lilit.png'] 
         ]);
 
         $menu5 = Menu::create([
@@ -91,7 +77,7 @@ class DatabaseSeeder extends Seeder
             'price' => 38000,
             'category' => 'Makanan',
             'available' => true,
-            'image_url' => 'img/rawon.png'
+            'image_url' => ['img/rawon.png'] 
         ]);
 
         $menu6 = Menu::create([
@@ -100,7 +86,7 @@ class DatabaseSeeder extends Seeder
             'price' => 45000,
             'category' => 'Makanan',
             'available' => true,
-            'image_url' => 'img/ikan-bakar.png'
+            'image_url' => ['img/ikan-bakar.png'] 
         ]);
 
         $menu7 = Menu::create([
@@ -109,7 +95,7 @@ class DatabaseSeeder extends Seeder
             'price' => 18000,
             'category' => 'Snack',
             'available' => true,
-            'image_url' => 'img/cireng.png'
+            'image_url' => ['img/cireng.png'] 
         ]);
 
         $menu8 = Menu::create([
@@ -118,7 +104,7 @@ class DatabaseSeeder extends Seeder
             'price' => 22000,
             'category' => 'Snack',
             'available' => true,
-            'image_url' => 'img/lumpia.png'
+            'image_url' => ['img/lumpia.png'] 
         ]);
 
         $menu9 = Menu::create([
@@ -127,7 +113,7 @@ class DatabaseSeeder extends Seeder
             'price' => 15000,
             'category' => 'Minuman',
             'available' => true,
-            'image_url' => 'img/es-campur.png'
+            'image_url' => ['img/es-campur.png'] 
         ]);
 
         $menu10 = Menu::create([
@@ -136,7 +122,7 @@ class DatabaseSeeder extends Seeder
             'price' => 25000,
             'category' => 'Minuman',
             'available' => true,
-            'image_url' => 'img/kopi-susu.png'
+            'image_url' => ['img/kopi-susu.png'] 
         ]);
 
         $menu11 = Menu::create([
@@ -145,7 +131,7 @@ class DatabaseSeeder extends Seeder
             'price' => 12000,
             'category' => 'Minuman',
             'available' => true,
-            'image_url' => 'img/wedang-jahe.png'
+            'image_url' => ['img/wedang-jahe.png']
         ]);
 
         $menu12 = Menu::create([
@@ -154,7 +140,7 @@ class DatabaseSeeder extends Seeder
             'price' => 14000,
             'category' => 'Snack',
             'available' => true,
-            'image_url' => 'img/tahu-isi.png'
+            'image_url' => ['img/tahu-isi.png'] 
         ]);
 
         $menu13 = Menu::create([
@@ -163,7 +149,7 @@ class DatabaseSeeder extends Seeder
             'price' => 32000,
             'category' => 'Makanan',
             'available' => true,
-            'image_url' => 'img/mie-goreng.png'
+            'image_url' => ['img/mie-goreng.png'] 
         ]);
 
         $menu14 = Menu::create([
@@ -172,6 +158,7 @@ class DatabaseSeeder extends Seeder
             'price' => 10000,
             'category' => 'Makanan',
             'available' => false,
+            'image_url' => [] 
         ]);
     }
 }

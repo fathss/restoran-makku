@@ -27,8 +27,42 @@
                 <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                     <div class="card h-100 card-outline card-danger shadow-sm hover-effect">
                         
-                        <img src="{{ $menu->image_url ? asset($menu->image_url) : 'https://placehold.co/300x200?text=No+Image' }}" 
-                            class="card-img-top" style="height: 200px; object-fit: cover;" alt="...">
+                        <div class="card-img-top overflow-hidden" style="height: 200px;">
+                            @php
+                                $imgData = $menu->image_url ?? [];
+                                if (!is_array($imgData)) {
+                                    $imgData = [$imgData];
+                                }
+                                $images = array_values(array_filter($imgData));
+                            @endphp
+
+                            @if(count($images) > 1)
+                                <div id="carousel-{{ $menu->menu_id }}" class="carousel slide h-100" data-ride="carousel" data-interval="3000">
+
+                                    <div class="carousel-inner h-100">
+                                        @foreach($images as $key => $image)
+                                            <div class="carousel-item h-100 {{ $key == 0 ? 'active' : '' }}">
+                                                <img src="{{ asset($image) }}" class="d-block w-100 h-100" style="object-fit: cover;" alt="{{ $menu->menu_name }}">
+                                            </div>
+                                        @endforeach
+                                    </div>
+
+                                    <a class="carousel-control-prev" href="#carousel-{{ $menu->menu_id }}" role="button" data-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="carousel-control-next" href="#carousel-{{ $menu->menu_id }}" role="button" data-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </div>
+                            @else
+                                <img src="{{ !empty($images) ? asset($images[0]) : 'https://placehold.co/300x200?text=No+Image' }}" 
+                                    class="w-100 h-100" 
+                                    style="object-fit: cover;" 
+                                    alt="{{ $menu->menu_name }}">
+                            @endif
+                        </div>
                         
                         <div class="card-body d-flex flex-column">
                             <h5 class="font-weight-bold">{{ $menu->menu_name }}</h5>

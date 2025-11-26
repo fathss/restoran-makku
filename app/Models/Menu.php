@@ -14,4 +14,8 @@ class Menu extends Model
     protected $fillable = [
         'menu_name', 'description', 'price', 'category', 'available', 'image_url'
     ];
+
+    protected $casts = [
+        'image_url' => 'array',
+    ];
 }

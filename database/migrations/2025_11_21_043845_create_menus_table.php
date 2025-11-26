@@ -18,7 +18,7 @@ return new class extends Migration
             $table->decimal('price', 10, 2); 
             $table->string('category'); 
             $table->boolean('available')->default(true);
-            $table->string('image_url')->nullable(); 
+            $table->text('image_url')->nullable();
             $table->timestamps();
         });
     }

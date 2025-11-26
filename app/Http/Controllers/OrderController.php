@@ -50,7 +50,7 @@ class OrderController extends Controller
             DB::commit(); 
 
             return redirect()->route('home')
-                 ->with('success', 'Pesanan Anda berhasil dibuat! Silakan tunggu pesanan Anda.');
+                ->with('success', 'Pesanan Anda berhasil dibuat! Silakan tunggu pesanan Anda.');
 
         } catch (\Exception $e) {
             DB::rollback();
