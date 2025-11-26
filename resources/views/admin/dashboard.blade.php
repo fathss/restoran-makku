@@ -46,7 +46,7 @@
     </div>
     {{-- / Baris 1 --}}
 
-    <h3 class="mb-3 mt-4">Laporan Keuangan</h3>
+    <h3 class="mb-3 mt-4">Laporan Penjualan</h3>
 
     {{-- Baris 2 --}}
     <div class="row">
@@ -277,7 +277,7 @@
     </div>
     {{-- / Baris 2 --}}
 
-    <h3 class="mb-3 mt-4">Laporan Penjualan</h3>
+    <h3 class="mb-3 mt-4">Laporan Keuangan</h3>
 
     {{-- Baris 3 --}}
     <div class="row">
