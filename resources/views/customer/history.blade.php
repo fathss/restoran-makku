@@ -83,7 +83,7 @@
                             <td>
                                 @if($res->status == 'pending')
                                     <span class="badge badge-warning">Menunggu</span>
-                                @elseif($res->status == 'confirmed')
+                                @elseif($res->status == 'completed')
                                     <span class="badge badge-success">Disetujui</span>
                                 @else
                                     <span class="badge badge-danger">Batal</span>
