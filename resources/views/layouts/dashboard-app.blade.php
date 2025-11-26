@@ -17,3 +17,7 @@
         @include('partials.admin.footer')
     </div>
 @endsection
+
+@section('script')
+    @include('partials.admin.shared.alert-toastr')
+@endsection

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\User;
 use App\Models\Menu;
 use App\Models\Order;
@@ -21,47 +20,100 @@ class AdminController extends Controller
     {
         $totalMenu = Menu::count();
 
-        // Order & Reservasi Hari Ini
         $totalOrderHariIni = Order::whereDate('created_at', now())->count();
         $totalReservasiHariIni = Reservation::whereDate('created_at', now())->count();
 
-        $pendapatanOrderHariIni = Order::whereDate('created_at', now())
-            ->where('status', Order::STATUS_COMPLETED)
-            ->select(
-                DB::raw("SUM(CASE WHEN order_type = 'dine_in' THEN total_amount ELSE 0 END) as dine_in"),
-                DB::raw("SUM(CASE WHEN order_type = 'takeaway' THEN total_amount ELSE 0 END) as takeaway")
-            )
-            ->first();
+        $pendapatanOrder = [
+            'dine_in' => [
+                'today' => Order::where('status', Order::STATUS_COMPLETED)
+                    ->where('order_type', 'dine_in')
+                    ->whereDate('created_at', today())
+                    ->sum('total_amount'),
+                'thisWeek' => Order::where('status', Order::STATUS_COMPLETED)
+                    ->where('order_type', 'dine_in')
+                    ->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])
+                    ->sum('total_amount'),
+                'thisMonth' => Order::where('status', Order::STATUS_COMPLETED)
+                    ->where('order_type', 'dine_in')
+                    ->whereMonth('created_at', now()->month)
+                    ->sum('total_amount'),
+                'allTime' => Order::where('status', Order::STATUS_COMPLETED)
+                    ->where('order_type', 'dine_in')
+                    ->sum('total_amount'),
+            ],
+            'takeaway' => [
+                'today' => Order::where('status', Order::STATUS_COMPLETED)
+                    ->where('order_type', 'takeaway')
+                    ->whereDate('created_at', today())
+                    ->sum('total_amount'),
+                'thisWeek' => Order::where('status', Order::STATUS_COMPLETED)
+                    ->where('order_type', 'takeaway')
+                    ->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])
+                    ->sum('total_amount'),
+                'thisMonth' => Order::where('status', Order::STATUS_COMPLETED)
+                    ->where('order_type', 'takeaway')
+                    ->whereMonth('created_at', now()->month)
+                    ->sum('total_amount'),
+                'allTime' => Order::where('status', Order::STATUS_COMPLETED)
+                    ->where('order_type', 'takeaway')
+                    ->sum('total_amount'),
+            ],
+        ];
 
-        $totalPendapatanHariIni = $pendapatanOrderHariIni->dine_in + $pendapatanOrderHariIni->takeaway;
+        $totalPendapatan = [
+            'today' => $pendapatanOrder['dine_in']['today'] + $pendapatanOrder['takeaway']['today'],
+            'thisWeek' => $pendapatanOrder['dine_in']['thisWeek'] + $pendapatanOrder['takeaway']['thisWeek'],
+            'thisMonth' => $pendapatanOrder['dine_in']['thisMonth'] + $pendapatanOrder['takeaway']['thisMonth'],
+            'allTime' => $pendapatanOrder['dine_in']['allTime'] + $pendapatanOrder['takeaway']['allTime'],
+        ];
 
-        // Pendapatan Order & Reservasi selama ini
-        $pendapatanOrder = Order::where('status', Order::STATUS_COMPLETED)
-            ->select(
-                DB::raw("SUM(CASE WHEN order_type = 'dine_in' THEN total_amount ELSE 0 END) as dine_in"),
-                DB::raw("SUM(CASE WHEN order_type = 'takeaway' THEN total_amount ELSE 0 END) as takeaway")
-            )
-            ->first();
-
-        $totalPendapatan = $pendapatanOrder->dine_in + $pendapatanOrder->takeaway;
-
-        $query = OrderDetail::select('menu_id', DB::raw('SUM(quantity) as total'))
+        $topSellers = OrderDetail::select('menu_id', DB::raw('SUM(quantity) as total'))
             ->join('orders', 'orders.order_id', '=', 'order_details.order_id')
-            ->whereDate('orders.created_at', now())
             ->where('orders.status', Order::STATUS_COMPLETED)
             ->groupBy('menu_id')
             ->orderByDesc('total')
-            ->first();
+            ->take(5)
+            ->get();
 
-        if ($query) {
-            $menuTerlaris = Menu::find($query->menu_id);
-            $totalOrderMenu = $query->total;
-            $totalPendapatanMenu = $totalOrderMenu * $menuTerlaris->price;
-        } else {
-            $menuTerlaris = null;
-            $totalOrderMenu = 0;
-            $totalPendapatanMenu = 0;
+        $topMenus = [];
+
+        foreach ($topSellers as $item) {
+            $menu = Menu::find($item->menu_id);
+
+            if ($menu) {
+                $topMenus[] = [
+                    'menu' => $menu,
+                    'total_order' => $item->total,
+                    'pendapatan' => $item->total * $menu->price,
+                ];
+            }
         }
+
+        $dineInCount = Order::where('order_type', 'dine_in')
+            ->where('status', Order::STATUS_COMPLETED)
+            ->count();
+
+        $takeawayCount = Order::where('order_type', 'takeaway')
+            ->where('status', Order::STATUS_COMPLETED)
+            ->count();
+
+        $makananCount = OrderDetail::whereHas('order', function ($q) {
+            $q->where('status', Order::STATUS_COMPLETED);
+        })->whereHas('menu', function ($q) {
+            $q->where('category', 'Makanan');
+        })->count();
+
+        $minumanCount = OrderDetail::whereHas('order', function ($q) {
+            $q->where('status', Order::STATUS_COMPLETED);
+        })->whereHas('menu', function ($q) {
+            $q->where('category', 'Minuman');
+        })->count();
+
+        $snackCount = OrderDetail::whereHas('order', function ($q) {
+            $q->where('status', Order::STATUS_COMPLETED);
+        })->whereHas('menu', function ($q) {
+            $q->where('category', 'Snack');
+        })->count();
 
         $latestOrders = Order::with('user')
             ->orderBy('created_at', 'desc')
@@ -76,33 +128,18 @@ class AdminController extends Controller
             'totalMenu',
             'totalOrderHariIni',
             'totalReservasiHariIni',
-            'pendapatanOrderHariIni',
-            'totalPendapatanHariIni',
             'pendapatanOrder',
             'totalPendapatan',
-            'menuTerlaris',
-            'totalOrderMenu',
-            'totalPendapatanMenu',
+            'topMenus',
+            'dineInCount',
+            'takeawayCount',
+            'makananCount',
+            'minumanCount',
+            'snackCount',
             'latestOrders',
             'latestReservations'
         ));
     }
-
-    // /**
-    //  * Show the form for creating a new resource.
-    //  */
-    // public function create()
-    // {
-    //     //
-    // }
-
-    // /**
-    //  * Store a newly created resource in storage.
-    //  */
-    // public function store(Request $request)
-    // {
-    //     //
-    // }
 
     // /**
     //  * Display the specified resource.
@@ -113,42 +150,4 @@ class AdminController extends Controller
 
         return view('admin.profile', compact('user'));
     }
-
-    // /**
-    //  * Show the form for editing the specified resource.
-    //  */
-    // public function edit(string $id)
-    // {
-    //     $user = User::findOrFail($id);
-
-    //     return view('admin.edit-profile', compact('user'));
-    // }
-
-    // /**
-    //  * Update the specified resource in storage.
-    //  */
-    // public function update(ProfileUpdateRequest $request, string $id)
-    // {
-    //     $user = User::findOrFail($id);
-
-    //     $request->user()->fill($request->validated());
-
-    //     if ($request->user()->isDirty('email')) {
-    //         $request->user()->email_verified_at = null;
-    //     }
-
-    //     $request->user()->save();
-
-    //     return redirect('admin.profile', compact($user))
-    //         ->with('success', 'Informasi profil berhasil diperbarui.')
-    //         ->with('type', 'profile');
-    // }
-
-    // /**
-    //  * Remove the specified resource from storage.
-    //  */
-    // public function destroy(string $id)
-    // {
-    //     //
-    // }
 }
